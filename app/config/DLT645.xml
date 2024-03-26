@@ -220615,6 +220615,7 @@
 		<name>时段数（每日切换时段数）</name>
 		<length>1</length>
 		<unit>个</unit>
+		<type>BCD</type>
 	</dataItem>
 	<dataItem id="04010001" protocol="DLT/645-2007" region="南网">
 		<name>第1套第1日时段表数据</name>
