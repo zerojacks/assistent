@@ -219172,6 +219172,219 @@
 			<sign>yes</sign>
 		</dataItem>
 	</dataItem>
+	<dataItem id="061201FF" protocol="DLT/645-2007" region="南网">
+		<name>（模块负荷记录）电压数据块</name>
+		<length>6</length>
+		<dataItem id="06120101">
+			<name>（模块负荷记录）A相电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="06120102">
+			<name>（模块负荷记录）B相电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="06120103">
+			<name>（模块负荷记录）C相电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+	</dataItem>
+	<dataItem id="061202FF" protocol="DLT/645-2007" region="南网">
+		<name>（模块负荷记录）电流数据块</name>
+		<length>9</length>
+		<dataItem id="06120201">
+			<name>（模块负荷记录）A相电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120202">
+			<name>（模块负荷记录）B相电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120203">
+			<name>（模块负荷记录）C相电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+			<sign>yes</sign>
+		</dataItem>
+	</dataItem>
+	<dataItem id="061203FF" protocol="DLT/645-2007" region="南网">
+		<name>（模块负荷记录）有功功率数据块</name>
+		<length>12</length>
+		<dataItem id="06120300">
+			<name>（模块负荷记录）总有功功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120301">
+			<name>（模块负荷记录）A相有功功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120302">
+			<name>（模块负荷记录）B相有功功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120303">
+			<name>（模块负荷记录）C相有功功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+			<sign>yes</sign>
+		</dataItem>
+	</dataItem>
+	<dataItem id="061204FF" protocol="DLT/645-2007" region="南网">
+		<name>（模块负荷记录）无功功率数据块</name>
+		<length>12</length>
+		<dataItem id="06120400">
+			<name>（模块负荷记录）总无功功率</name>
+			<length>3</length>
+			<unit>kvar</unit>
+			<decimal>4</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120401">
+			<name>（模块负荷记录）A相无功功率</name>
+			<length>3</length>
+			<unit>kvar</unit>
+			<decimal>4</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120402">
+			<name>（模块负荷记录）B相无功功率</name>
+			<length>3</length>
+			<unit>kvar</unit>
+			<decimal>4</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120403">
+			<name>（模块负荷记录）C相无功功率</name>
+			<length>3</length>
+			<unit>kvar</unit>
+			<decimal>4</decimal>
+			<sign>yes</sign>
+		</dataItem>
+	</dataItem>
+	<dataItem id="061205FF" protocol="DLT/645-2007" region="南网">
+		<name>（模块负荷记录）功率因数数据块</name>
+		<length>8</length>
+		<dataItem id="06120500">
+			<name>（模块负荷记录）总功率因数</name>
+			<length>2</length>
+			<decimal>3</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120501">
+			<name>（模块负荷记录）A相功率因数</name>
+			<length>2</length>
+			<decimal>3</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120502">
+			<name>（模块负荷记录）B相功率因数</name>
+			<length>2</length>
+			<decimal>3</decimal>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120503">
+			<name>（模块负荷记录）C相功率因数</name>
+			<length>2</length>
+			<decimal>3</decimal>
+			<sign>yes</sign>
+		</dataItem>
+	</dataItem>
+	<dataItem id="061206FF" protocol="DLT/645-2007" region="南网">
+		<name>（模块负荷记录）有功，无功总电能数据块</name>
+		<length>16</length>
+		<dataItem id="06120601">
+			<name>（模块负荷记录）正向有功总电能</name>
+			<length>4</length>
+			<decimal>2</decimal>
+			<unit>kWh</unit>
+		</dataItem>
+		<dataItem id="06120602">
+			<name>（模块负荷记录）反向有功总电能</name>
+			<length>4</length>
+			<decimal>2</decimal>
+			<unit>kWh</unit>
+		</dataItem>
+		<dataItem id="06120603">
+			<name>（模块负荷记录）组合无功1总电能</name>
+			<length>4</length>
+			<decimal>2</decimal>
+			<unit>kvarh</unit>
+		</dataItem>
+		<dataItem id="06120604">
+			<name>（模块负荷记录）组合无功2总电能</name>
+			<length>4</length>
+			<decimal>2</decimal>
+			<unit>kvarh</unit>
+		</dataItem>
+	</dataItem>
+	<dataItem id="061207FF" protocol="DLT/645-2007" region="南网">
+		<name>（模块负荷记录）四象限无功总电能数据块</name>
+		<length>16</length>
+		<dataItem id="06120701">
+			<name>（模块负荷记录）第一象限无功总电能</name>
+			<length>4</length>
+			<decimal>2</decimal>
+			<unit>kvarh</unit>
+		</dataItem>
+		<dataItem id="06120702">
+			<name>（模块负荷记录）第二象限无功总电能</name>
+			<length>4</length>
+			<decimal>2</decimal>
+			<unit>kvarh</unit>
+		</dataItem>
+		<dataItem id="06120703">
+			<name>（模块负荷记录）第三象限无功总电能</name>
+			<length>4</length>
+			<decimal>2</decimal>
+			<unit>kvarh</unit>
+		</dataItem>
+		<dataItem id="06120704">
+			<name>（模块负荷记录）第四象限无功总电能</name>
+			<length>4</length>
+			<decimal>2</decimal>
+			<unit>kvarh</unit>
+		</dataItem>
+	</dataItem>
+	<dataItem id="061208FF" protocol="DLT/645-2007" region="南网">
+		<name>（模块负荷记录）当前需量数据块</name>
+		<length>6</length>
+		<dataItem id="06120801">
+			<name>（模块负荷记录）当前有功需量</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<unit>kW</unit>
+			<sign>yes</sign>
+		</dataItem>
+		<dataItem id="06120802">
+			<name>（模块负荷记录）当前无功需量</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<unit>kvarh</unit>
+			<sign>yes</sign>
+		</dataItem>
+	</dataItem>
 
 	<dataItem id="03700000" protocol="DLT/645-2007" region="南网">
 		<name>(本日)电压合格率统计数据</name>
