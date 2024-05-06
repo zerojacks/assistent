@@ -75092,6 +75092,61 @@
 			<decimal>2</decimal>
 		</splitByLength>
 	</dataItem>
+	<dataItem id="03E00301" protocol="DLT/645-2007" region="南网">
+		<name>(上1次)新增剩余电流监测报警事件记录</name>
+		<length>35</length>
+		<splitByLength>
+			<name>字节长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>发生时刻</name>
+			<length>6</length>
+			<time>ssmmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>结束时刻</name>
+			<length>6</length>
+			<time>ssmmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>发生时刻正向有功总电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<decimal>2</decimal>
+		</splitByLength>
+		<splitByLength>
+			<name>发生时刻反向有功总电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<decimal>2</decimal>
+		</splitByLength>
+		<splitByLength>
+			<name>结束时刻正向有功总电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<decimal>2</decimal>
+		</splitByLength>
+		<splitByLength>
+			<name>结束时刻反向有功总电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<decimal>2</decimal>
+		</splitByLength>
+		<splitByLength>
+			<name>发生时刻A相电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</splitByLength>
+		<splitByLength>
+			<name>发生时刻剩余电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</splitByLength>
+	</dataItem>
 	<!--(当前)运行状态字数据块-->
 	<dataItem id="040005FF" protocol="DLT/645-2007" region="南网">
 		<name>运行状态字数据块</name>
