@@ -75147,6 +75147,16 @@
 			<decimal>3</decimal>
 		</splitByLength>
 	</dataItem>
+	<dataItem id="04000101" protocol="DLT/645-2007" region="南网">
+		<name>日期及星期</name>
+		<length>4</length>
+		<time>WWDDMMYY</time>
+	</dataItem>
+	<dataItem id="04000102" protocol="DLT/645-2007" region="南网">
+		<name>时间</name>
+		<length>3</length>
+		<time>ssmmhh</time>
+	</dataItem>
 	<!--(当前)运行状态字数据块-->
 	<dataItem id="040005FF" protocol="DLT/645-2007" region="南网">
 		<name>运行状态字数据块</name>
@@ -75481,6 +75491,1101 @@
 			<length>4</length>
 		</dataItem>
 	</dataItem>
+	<dataItem id="04001501" protocol="DLT/645-2007" region="南网">
+		<name>主动上报状态字</name>
+		<length>unknown</length>
+		<splitByLength>
+			<name>主动上报状态字</name>
+			<length>12</length>
+			<splitbit>
+				<!-- Bit 0 ~ 7 -->
+				<bit id="0">
+					<name>负荷开关误动或拒动</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="1">
+					<name>ESAM错误</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="2">
+					<name>升级失败</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="3">
+					<name>时钟电池电压低</name>
+					<value key="1">欠压</value>
+					<value key="0">正常</value>
+				</bit>
+				<bit id="4">
+					<name>计量采样回路故障</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="5">
+					<name>管理单元存储器故障或损坏</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="6">
+					<name>计量单元存储器故障或损坏</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="7">
+					<name>时钟故障</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 8 ~ 15 -->
+				<bit id="8">
+					<name>停电抄表电池欠压</name>
+					<value key="1">欠压</value>
+					<value key="0">正常</value>
+				</bit>
+				<bit id="9">
+					<name>透支状态</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="10">
+					<name>开表盖</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="11">
+					<name>开端钮盖</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="12">
+					<name>恒定磁场干扰</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="13">
+					<name>电源异常</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="14">
+					<name>跳闸成功（命令）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="15">
+					<name>合闸成功（命令）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 16 ~ 23 -->
+				<bit id="16">
+					<name>A相失压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="17">
+					<name>A相欠压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="18">
+					<name>A相过压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="19">
+					<name>A相失流</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="20">
+					<name>A相过流</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="21">
+					<name>A相过载</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="22">
+					<name>A相功率反向</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="23">
+					<name>A相断相</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 24 ~ 31 -->
+				<bit id="24">
+					<name>A相断流</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="25">
+					<name>剩余电流超限</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="26">
+					<name>自监测误差超限</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="27">
+					<name>保留</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="28">
+					<name>电压越上限</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="29">
+					<name>电压越下限</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="30">
+					<name>端子温度过热</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="31">
+					<name>保留</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 32 ~ 39 -->
+				<bit id="32">
+					<name>B相失压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="33">
+					<name>B相欠压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="34">
+					<name>B相过压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="35">
+					<name>B相失流</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="36">
+					<name>B相过流</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="37">
+					<name>B相过载</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="38">
+					<name>B相功率反向</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="39">
+					<name>B相断相</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 40 ~ 47 -->
+				<bit id="40">
+					<name>B相断流</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="41">
+					<name>保留</name>
+				</bit>
+				<bit id="42">
+					<name>漏电流超限告警恢复</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="43">
+					<name>表后复电/电瓶车充电</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="44">
+					<name>表后停电（失压）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="45">
+					<name>表后停电（主动拉闸）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="46">
+					<name>恶性负载</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="47">
+					<name>电弧告警</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 48 ~ 55 -->
+				<bit id="48">
+					<name>C相失压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="49">
+					<name>C相欠压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="50">
+					<name>C相过压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="51">
+					<name>C相失流</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="52">
+					<name>C相过流</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="53">
+					<name>C相过载</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="54">
+					<name>C相功率反向</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="55">
+					<name>C相断相</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 56 ~ 63 -->
+				<bit id="55">
+					<name>C相断流</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="57">
+					<name>电量异常（倒走、反转、不走字）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="58">
+					<name>表后停电（负荷开关误动或拒动）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="59">
+					<name>表后停电（恶性负荷）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="60">
+					<name>表后停电（漏电监测）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="61">
+					<name>表后停电（端子温度过热）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="62">
+					<name>表后停电（电弧告警）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="63">
+					<name>表后停电（A相过载）</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 64 ~ 71 -->
+				<bit id="64">
+					<name>电压逆相序</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="65">
+					<name>电流逆相序</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="66">
+					<name>电压不平衡</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="67">
+					<name>电流不平衡</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="68">
+					<name>辅助电源失电</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="69">
+					<name>掉电</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="70">
+					<name>需量超限</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="71">
+					<name>总功率因数超下限</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 72 ~ 79 -->
+				<bit id="72">
+					<name>电流严重不平衡</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="73">
+					<name>潮流反向</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="74">
+					<name>全失压</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="75">
+					<name>计量单元异常</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="76">
+					<name>管理单元异常</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="77">
+					<name>端子温度剧变</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="78">
+					<name>管理单元更换</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="79">
+					<name>管理单元程序升级</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 80 ~ 87 -->
+				<bit id="80">
+					<name>编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="81">
+					<name>电表清零</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="82">
+					<name>需量清零</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="83">
+					<name>事件清零</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="84">
+					<name>校时</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="85">
+					<name>时段表编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="86">
+					<name>时区表编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="87">
+					<name>周休日编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<!-- Bit 88 ~ 95 -->
+				<bit id="88">
+					<name>节假日编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="89">
+					<name>有功组合方式编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="90">
+					<name>无功组合方式1编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="91">
+					<name>无功组合方式2编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="92">
+					<name>结算日编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="93">
+					<name>费率参数表编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="94">
+					<name>阶梯表编程</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+				<bit id="95">
+					<name>密钥更新</name>
+					<value key="1">已发生</value>
+					<value key="0">未发生</value>
+				</bit>
+			</splitbit>
+		</splitByLength>
+		<splitByLength>
+			<name>分隔符</name>
+			<length>1</length>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>事件新增次数</name>
+			<length>unknown</length>
+			<lengthrule>RANGE(分隔符)</lengthrule>
+			<type>EVENT_COUNT</type>
+			<single>YES</single>
+		</splitByLength>
+		<splitByLength>
+			<name>分隔符</name>
+			<length>1</length>
+			<type>BCD</type>
+		</splitByLength>
+	</dataItem>
+    <template id="EVENT_COUNT" protocol="DLT/645-2007" region="南网">
+        <splitByLength>
+            <name>主动上报事件1新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件2新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件3新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件4新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件5新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件6新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件7新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件8新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件9新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件10新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件11新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件12新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件13新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件14新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件15新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件16新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件17新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件18新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件19新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件20新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件21新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件22新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件23新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件24新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件25新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件26新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件27新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件28新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件29新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件30新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件31新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件32新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件33新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件34新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件35新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件36新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件37新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件38新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件39新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件40新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件41新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件42新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件43新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件44新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件45新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件46新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件47新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件48新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件49新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件50新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件51新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件52新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件53新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件54新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件55新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件56新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件57新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件58新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件59新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件60新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件61新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件62新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件63新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件64新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件65新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件66新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件67新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件68新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件69新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件70新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件71新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件72新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件73新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件74新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件75新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件76新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件77新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件78新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件79新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件80新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件81新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件82新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件83新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件84新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件85新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件86新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件87新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件88新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件89新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件90新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件91新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件92新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件93新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件94新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件95新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+        <splitByLength>
+            <name>主动上报事件96新增次数</name>
+            <length>1</length>
+            <unit>次</unit>
+            <type>BCD</type>
+        </splitByLength>
+    </template>
 	<!--(上1次)冻结时间-->
 	<dataItem id="05060001" protocol="DLT/645-2007" region="南网">
 		<name>(上1次)冻结时间</name>
