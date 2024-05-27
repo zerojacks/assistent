@@ -76586,6 +76586,73 @@
             <type>BCD</type>
         </splitByLength>
     </template>
+	<dataItem id="040B01FF" protocol="DLT/645-2007" region="贵州">
+		<name>油变装置数据</name>
+		<length>15</length>
+		<dataItem id="040B0101" protocol="DLT/645-2007" region="贵州">
+			<name>探头油顶温度</name>
+			<length>4</length>
+			<unit>℃</unit>
+			<decimal>2</decimal>
+		</dataItem>
+		<dataItem id="040B0102" protocol="DLT/645-2007" region="贵州">
+			<name>风机状态</name>
+			<length>1</length>
+			<splitbit>
+				<bit id="0">
+					<name>风机状态</name>
+					<value key="1">启动风机</value>
+					<value key="0">关闭风机</value>
+				</bit>
+				<bit id="1-7">
+					<name>保留</name>
+				</bit>
+			</splitbit>
+		</dataItem>
+		<dataItem id="040B0103" protocol="DLT/645-2007" region="贵州">
+			<name>风机模式</name>
+			<length>1</length>
+			<splitbit>
+				<bit id="0">
+					<name>保留</name>
+				</bit>
+				<bit id="1">
+					<name>风机模式</name>
+					<value key="1">自动模式</value>
+					<value key="0">手动模式</value>
+				</bit>
+				<bit id="2-7">
+					<name>保留</name>
+				</bit>
+			</splitbit>
+		</dataItem>
+		<dataItem id="040B0104" protocol="DLT/645-2007" region="贵州">
+			<name>油压</name>
+			<length>4</length>
+			<unit>kPa/1000</unit>
+			<decimal>2</decimal>
+		</dataItem>
+		<dataItem id="040B0105" protocol="DLT/645-2007" region="贵州">
+			<name>油温</name>
+			<length>4</length>
+			<unit>℃/10</unit>
+			<decimal>2</decimal>
+		</dataItem>
+		<dataItem id="040B0106" protocol="DLT/645-2007" region="贵州">
+			<name>油位</name>
+			<length>1</length>
+			<splitbit>
+				<bit id="0">
+					<name>油位状态</name>
+					<value key="1">油位低</value>
+					<value key="0">油位正常</value>
+				</bit>
+				<bit id="1-7">
+					<name>保留</name>
+				</bit>
+			</splitbit>
+		</dataItem>
+	</dataItem>
 	<!--(上1次)冻结时间-->
 	<dataItem id="05060001" protocol="DLT/645-2007" region="南网">
 		<name>(上1次)冻结时间</name>
@@ -222592,4 +222659,75 @@
 			</splitByLength>
 		</splitByLength>
 	</dataItem>
+	<!--空调状态-->
+    <dataItem id="08000201" protocol="csg13" region="南网,广东">
+        <name>空调开关机状态</name>
+        <length>1</length>
+        <type>BCD</type>
+        <value key="02">关闭</value>
+        <value key="01">开启</value>
+        <value key="other">未知</value>
+    </dataItem>
+    <dataItem id="08000301" protocol="csg13" region="南网,广东">
+        <name>空调开关机状态</name>
+        <length>1</length>
+        <type>BCD</type>
+        <value key="01">自动</value>
+        <value key="02">制冷</value>
+        <value key="03">除湿</value>
+        <value key="04">制热</value>
+        <value key="05">送风</value>
+        <value key="06">自动除湿</value>
+        <value key="07">手动除湿</value>
+        <value key="other">未知</value>
+    </dataItem>
+    <dataItem id="08000401" protocol="csg13" region="南网">
+        <name>空调制冷设置温度</name>
+        <length>2</length>
+        <unit>℃</unit>
+        <decimal>1</decimal>
+        <sign>yes</sign>
+    </dataItem>
+    <dataItem id="08000402" protocol="csg13" region="南网">
+        <name>空调制热设置温度</name>
+        <length>2</length>
+        <unit>℃</unit>
+        <decimal>1</decimal>
+        <sign>yes</sign>
+    </dataItem>
+    <dataItem id="08000403" protocol="csg13" region="南网">
+        <name>蒸发器进水温度点(制冷)</name>
+        <length>2</length>
+        <unit>℃</unit>
+        <decimal>1</decimal>
+        <sign>yes</sign>
+    </dataItem>
+    <dataItem id="08000404" protocol="csg13" region="南网">
+        <name>蒸发器出水温度点(制冷)</name>
+        <length>2</length>
+        <unit>℃</unit>
+        <decimal>1</decimal>
+        <sign>yes</sign>
+    </dataItem>
+    <dataItem id="08000405" protocol="csg13" region="南网">
+       	<name>冷凝器进水温度点(制热)</name>
+       	<length>2</length>
+       	<unit>℃</unit>
+       	<decimal>1</decimal>
+       	<sign>yes</sign>
+    </dataItem>
+    <dataItem id="08000406" protocol="csg13" region="南网">
+       	<name>冷凝器出水温度点(制热)</name>
+       	<length>2</length>
+       	<unit>℃</unit>
+       	<decimal>1</decimal>
+       	<sign>yes</sign>
+    </dataItem>
+    <dataItem id="08000407" protocol="csg13" region="南网">
+       	<name>冷冻水供水温度</name>
+       	<length>2</length>
+       	<unit>℃</unit>
+       	<decimal>1</decimal>
+       	<sign>yes</sign>
+    </dataItem>
 </config>
