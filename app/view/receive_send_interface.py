@@ -22,7 +22,7 @@ from ..common.trie import format_hex_string
 from ..common.commodule import CommType
 from ..plugins.frame_csg import is_csg_frame,get_dir_prm,send_ack_frame,get_csg_adress
 from ..plugins.frame_fun import FrameFun as frame_fun
-from ..plugins.signalCommunication import SerialPortThread,MQTTClientThread,TcpClient,ClientWorker,MqttMessageDetails
+from ..plugins.signalCommunication import SerialPortThread,MQTTClientThread,TcpClient,ClientWorker,MqttMessageDetails,BLEWorker
 import os, json, ast
 from PyQt5.QtNetwork import QTcpSocket
 from typing import Type
@@ -1081,6 +1081,17 @@ class TabInterface(QWidget):
                     self.insertSubInterface(index, widget, text, text, ':/gallery/images/mqtt_connect.png')
                     widget.set_last_message(last_text)
                     widget.set_last_send_text(last_send)
+            elif type == CommType.BLUETOOTH:
+                if index is None:
+                    self.addSubInterface(widget, text, text, ':/gallery/images/ble_connect.png')
+                    self.tabCount += 1
+                else:
+                    self.insertSubInterface(index, widget, text, text, ':/gallery/images/ble_connect.png')
+                    widget.set_last_message(last_text)
+                    widget.set_last_send_text(last_send)
+                    
+            widget.set_info_to_log("online")
+
             
             widget.set_info_to_log("online")
         except Exception as e:
@@ -1095,7 +1106,9 @@ class TabInterface(QWidget):
             elif isinstance(channel, ClientWorker):
                 channel.stopsingal.emit() 
             elif isinstance(channel, MQTTClientThread):
-                channel.stopsingal.emit()      
+                channel.stopsingal.emit()   
+            elif isinstance(channel, BLEWorker):
+                channel.stopsingal.emit()
         except Exception as e:
             pass
 
@@ -1108,6 +1121,8 @@ class TabInterface(QWidget):
             text = channel.socket.peerAddress().toString() + ':' + str(channel.socket.peerPort())
         elif isinstance(channel, MQTTClientThread):
             text = channel.broker_address + ':' + str(channel.broker_port)
+        elif isinstance(channel, BLEWorker):
+            text = channel.address   
         else:
             text = "Unknown"
         return text

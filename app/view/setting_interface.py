@@ -4,12 +4,12 @@ from qfluentwidgets import (SettingCardGroup, SwitchSettingCard, FolderListSetti
                             HyperlinkCard, PrimaryPushSettingCard, ScrollArea,
                             ComboBoxSettingCard, ExpandLayout, Theme, CustomColorSettingCard,
                             setTheme, setThemeColor, RangeSettingCard, isDarkTheme,Pivot,qrouter,IndicatorPosition,FluentIconBase,
-                            qconfig,LineEdit,ComboBox,PrimaryPushButton,SwitchButton,ConfigItem, SettingCard,PlainTextEdit,IconWidget)
+                            qconfig,LineEdit,ComboBox,PrimaryPushButton,SwitchButton,ConfigItem, SettingCard,PlainTextEdit,IconWidget,InfoBarPosition)
 from qfluentwidgets import FluentIcon as FIF
 from qfluentwidgets import InfoBar,ProgressBar, FluentWindow, MessageBox
 from PyQt5.QtCore import Qt, pyqtSignal, QUrl, QStandardPaths,QRegExp,QMetaObject
 from PyQt5.QtGui import QDesktopServices,QIcon,QPainter,QColor,QRegExpValidator,QFont, QResizeEvent
-from PyQt5.QtWidgets import QWidget, QLabel, QFileDialog,QPushButton
+from PyQt5.QtWidgets import QWidget, QLabel, QFileDialog,QPushButton,QFormLayout
 from typing import Union
 from ..common.config import cfg, HELP_URL, FEEDBACK_URL, AUTHOR, VERSION, YEAR, isWin11,REPO_OWNER,REPO_NAME
 from ..common.signal_bus import signalBus
@@ -17,13 +17,14 @@ from ..common.style_sheet import StyleSheet
 from ..plugins.update import UpdateThread
 from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout, QLabel, QHBoxLayout, QFrame, QSizePolicy
 import serial.tools.list_ports
-from ..plugins.signalCommunication import SerialPortThread,TcpServer,TcpClient,MQTTClientThread
+from ..plugins.signalCommunication import SerialPortThread,TcpServer,TcpClient,MQTTClientThread,BLEWorker
 from ..common.commodule import CommType,commmbus
 from ..components.state_tools import CustomStateToolTip
 from ..common.icon import Icon
-import serial,os,gc
+import serial,os,gc,asyncio
 from PyQt5.QtNetwork import QAbstractSocket
 from PyQt5.QtSerialPort import QSerialPort
+
 class CustomVBoxLayout(QVBoxLayout):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -717,6 +718,174 @@ class MqttConfig(QWidget):
         if errcode not in (25, 255):
             self.set_edit_enable(True) 
 
+class BleConnectConfig(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+        self.type = CommType.BLUETOOTH
+        self.worker = None
+        self.setFixedSize(300, 200)
+        self.initUI()
+    def initUI(self):
+        self.devicelayout = QHBoxLayout()
+        self.devicelabel = QLabel(self.tr("设备"))
+        self.devicelabel.setAlignment(Qt.AlignLeft)
+        self.devcombox = ComboBox()
+        self.devcombox.setFixedWidth(250)
+        self.devicelayout.addWidget(self.devicelabel, 1)
+        self.devicelayout.addWidget(self.devcombox)
+
+        self.servicelayout = QHBoxLayout()
+        self.servicelabel = QLabel(self.tr("服务"))
+        self.servicelabel.setAlignment(Qt.AlignLeft)
+        self.servicecom = ComboBox()
+        self.servicecom.setFixedWidth(250)
+        self.servicelayout.addWidget(self.servicelabel, 1)
+        self.servicelayout.addWidget(self.servicecom)
+
+
+        self.chartlayout = QHBoxLayout()
+        self.characteristicslabel = QLabel(self.tr("特征"))
+        self.characteristicslabel.setAlignment(Qt.AlignLeft)
+        self.characteristicscom = ComboBox()
+        self.characteristicscom.setFixedWidth(250)
+        self.chartlayout.addWidget(self.characteristicslabel, 1)
+        self.chartlayout.addWidget(self.characteristicscom)
+
+        self.btpayout = QHBoxLayout()
+        self.scanbutton = PrimaryPushButton(self.tr("扫描"))
+        self.connebutton = PrimaryPushButton(self.tr("连接"))
+        self.uuidbutton = PrimaryPushButton(self.tr("设置特征"))
+        self.btpayout.addWidget(self.scanbutton)
+        self.btpayout.addWidget(self.connebutton)
+        self.btpayout.addWidget(self.uuidbutton)
+
+        self.qvlayout = CustomVBoxLayout(self)  # 使用垂直布局
+        self.qvlayout.addLayout(self.devicelayout)
+        self.qvlayout.addLayout(self.servicelayout)
+        self.qvlayout.addLayout(self.chartlayout)
+        self.qvlayout.addLayout(self.btpayout)
+        self.qvlayout.addSpacing(5)
+        self.qvlayout.setContentsMargins(0,0,0,0)
+
+        self.scanbutton.setCheckable(True)
+        self.scanbutton.setProperty('is_reconnectable', True)
+        self.connebutton.setCheckable(True)
+        self.connebutton.setProperty('is_reconnectable', True)
+        self.scanbutton.setFixedWidth(95)
+        self.connebutton.setFixedWidth(95)
+        self.init_slot()
+
+    def init_slot(self):
+        self.scanbutton.clicked.connect(self.scan_devices)
+        self.connebutton.clicked.connect(self.connect_device)
+        self.uuidbutton.clicked.connect(self.set_characteristics)
+
+    def init_blework(self):
+        self.worker = BLEWorker()
+        self.worker.devices_discovered.connect(self.display_devices)
+        self.worker.services_discovered.connect(self.display_services)
+        self.worker.connection_status.connect(self.handle_connection_status)
+        self.worker.start()
+
+    def setAlignment(self, a0: Union[Qt.Alignment, Qt.AlignmentFlag]):
+        self.qvlayout.setAlignment(a0)
+
+    def scan_devices(self):
+        self.devcombox.clear()
+        if self.worker is None:
+            self.init_blework()
+
+        self.set_edit_enable(False)
+        self.scanbutton.setEnabled(False)
+        is_reconnectable = self.scanbutton.property('is_reconnectable')
+        if is_reconnectable:
+            try:
+                asyncio.run_coroutine_threadsafe(self.worker.scan_devices(), self.worker.loop)
+                self.scanbutton.setProperty('is_reconnectable', False)
+            except Exception as e:
+                pass
+        else:
+            self.set_edit_enable(True)
+            self.scanbutton.setProperty('is_reconnectable', True)
+
+    def display_devices(self, devices):
+        for device in devices:
+            self.devcombox.addItem(f"{device.name} ({device.address})")
+        self.set_edit_enable(True)
+        self.scanbutton.setProperty('is_reconnectable', True)
+
+    def connect_device(self):
+        selected_item = self.devcombox.currentText()
+        if len(selected_item) == 0:
+            InfoBar.warning(
+                title=self.tr('告警'),
+                content=self.tr("未选择设备!"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=2000,
+                parent=self
+            )
+            return
+        
+        if self.worker is None:
+            self.init_blework()
+
+        self.set_edit_enable(False)
+        self.connebutton.setEnabled(False)
+        is_reconnectable = self.connebutton.property('is_reconnectable')
+        if is_reconnectable:
+            try:
+                address = selected_item.split('(')[-1].strip(')')
+                asyncio.run_coroutine_threadsafe(self.worker.connect_device(address), self.worker.loop)
+            except Exception as e:
+                print(e)
+        else:
+            try:
+                self.connebutton.setProperty('is_reconnectable', True)
+                asyncio.run_coroutine_threadsafe(self.worker.disconnect_device(), self.worker.loop)
+            except Exception as e:
+                print(e)
+            self.set_edit_enable(True)
+
+
+    def handle_connection_status(self, status):
+        if status:
+            print("连接成功")
+            self.connebutton.setText(self.tr('断开'))
+            self.connebutton.setEnabled(True)
+            self.servicecom.setEnabled(True)
+            self.characteristicscom.setEnabled(True)
+            self.uuidbutton.setEnabled(True)
+            self.connebutton.setProperty('is_reconnectable', False)
+        else:
+            print("连接失败")
+            self.connebutton.setText(self.tr('连接'))
+            self.set_edit_enable(True) 
+            self.connebutton.setProperty('is_reconnectable', True)
+    def set_characteristics(self):
+        text = self.characteristicscom.currentText()
+        if text != "":
+            uuid = text.split(':')[0].strip()
+            print("设置uuid", uuid)
+            asyncio.run_coroutine_threadsafe(self.worker.set_characteristic_uuid(uuid), self.worker.loop)
+
+    def display_services(self, services):
+        self.servicecom.clear()
+        self.characteristicscom.clear()
+        for service in services:
+            self.servicecom.addItem(f"{service['uuid']}: {service['description']}")
+            for char in service['characteristics']:
+                self.characteristicscom.addItem(f"{char['uuid']}: {char['description']}")
+
+    def set_edit_enable(self, enable=True):
+        self.devcombox.setEnabled(enable)
+        self.servicecom.setEnabled(enable)
+        self.characteristicscom.setEnabled(enable)
+        self.scanbutton.setEnabled(enable)
+        self.connebutton.setEnabled(enable)
+        self.uuidbutton.setEnabled(enable)
+
 class ConnectConfig(QWidget):
     """ Pivot interface """
 
@@ -728,17 +897,19 @@ class ConnectConfig(QWidget):
         self.pivot = self.Nav(self)
         self.stackedWidget = QStackedWidget(self)
         self.vBoxLayout = QVBoxLayout(self)
-        self.setFixedSize(300, 200)
+        self.setFixedSize(800, 300)
         text = "<font>端&nbsp;&nbsp;&nbsp;口</font>"
         self.tcpclientInterface = Tcpconfig(CommType.TCP_CLIENT, '远程地址',text,self)
         self.tcpserverInterface = Tcpconfig(CommType.TCP_SERVICE, '本地地址',text, self)
         self.serialInterface = SerialConfig(self)
         self.mqttInterface = MqttConfig(self)
+        self.bleconnectinterface = BleConnectConfig(self)
         # add items to pivot
         self.addSubInterface(self.tcpclientInterface, 'tcpclientInterface', self.tr('TCP客户端'))
         self.addSubInterface(self.tcpserverInterface, 'tcpserverInterface', self.tr('TCP服务器'))
         self.addSubInterface(self.serialInterface, 'serialInterface', self.tr('串口'))
         self.addSubInterface(self.mqttInterface, 'mqttInterface', self.tr('MQTT'))
+        self.addSubInterface(self.bleconnectinterface, "bleconnectinterface", self.tr('蓝牙'))
         self.vBoxLayout.addWidget(self.pivot, 0, Qt.AlignLeft)
         self.vBoxLayout.addWidget(self.stackedWidget)
         self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
@@ -751,7 +922,7 @@ class ConnectConfig(QWidget):
 
         qrouter.setDefaultRouteKey(self.stackedWidget, self.tcpclientInterface.objectName())
 
-    def addSubInterface(self, widget: QLabel, objectName, text):
+    def addSubInterface(self, widget: QWidget, objectName, text):
         widget.setObjectName(objectName)
         widget.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         self.stackedWidget.addWidget(widget)
@@ -763,7 +934,7 @@ class ConnectConfig(QWidget):
 
     def onCurrentIndexChanged(self, index):
         widget = self.stackedWidget.widget(index)
-        self.setFixedSize(widget.width(), widget.height() + 40)
+        self.setFixedSize(widget.width() + 40, widget.height() + 40)
         self.pivot.setCurrentItem(widget.objectName())
         qrouter.push(self.stackedWidget, widget.objectName())
         if index == 0:
@@ -772,6 +943,10 @@ class ConnectConfig(QWidget):
             self.connectType = CommType.TCP_SERVICE
         elif index == 2:
             self.connectType = CommType.SERIAL
+        elif index == 3:
+            self.connectType = CommType.MQTT
+        elif index == 4:
+            self.connectType = CommType.BLUETOOTH
 
     def resizeEvent(self, event):
         # 大小变化事件处理

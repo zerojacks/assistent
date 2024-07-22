@@ -4,6 +4,7 @@ from PyQt5.QtGui import QPainter, QColor, QPen, QBrush, QFont, QPalette, QPixmap
 from qfluentwidgets import StyleSheetBase, Theme, isDarkTheme, qconfig,PrimaryPushButton,ComboBox
 from ..common.signal_bus import signalBus
 from ..common.channel_info import channel_info
+from .EditWithLabel import LabeledLineEdit
 
 class MaskDialogBase(QDialog):
     """ Dialog box base class with a mask """
@@ -92,9 +93,12 @@ class Comwidget(QWidget):
         self.channelcomboBox = ComboBox()
         self.channelcomboBox.setPlaceholderText(self.tr("无通道链接"))
 
+        self.timeout = LabeledLineEdit(self.tr("超时时间(s):"))
+
         self._hBoxLayout.addWidget(self.read_button)
         self._hBoxLayout.addWidget(self.setbutton)
         self._hBoxLayout.addWidget(self.channelcomboBox)
+        self._hBoxLayout.addWidget(self.timeout)
         self.channel_info = None
         self.init_ui()
 
@@ -105,6 +109,7 @@ class Comwidget(QWidget):
         
         channel_info.channelInfoChanel.connect(self.add_combobox)
         self.channelcomboBox.currentIndexChanged.connect(self.set_cur_channel)
+        self.timeout.setText(str(15))
         
     def add_combobox(self, channel_info):
         existing_items = [self.channelcomboBox.itemText(i) for i in range(self.channelcomboBox.count())]
@@ -143,3 +148,12 @@ class Comwidget(QWidget):
         self.channel_info = channel
         return self.channel_info
 
+    def get_timeout(self):
+        text = self.timeout.text()
+        if text == '':
+            return 15
+        else:
+            if text.isdigit():
+                return int(text)
+            else:
+                return 15

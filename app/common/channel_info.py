@@ -1,4 +1,4 @@
-from ..plugins.signalCommunication import SerialPortThread,MQTTClientThread,TcpClient,ClientWorker,MqttMessageDetails
+from ..plugins.signalCommunication import SerialPortThread,MQTTClientThread,TcpClient,ClientWorker,MqttMessageDetails,BLEWorker
 import binascii
 from .signal_bus import signalBus
 from ..common.commodule import CommType
@@ -22,6 +22,8 @@ class Channel_info(QObject):
             text = channel.socket.peerAddress().toString() + ':' + str(channel.socket.peerPort())
         elif isinstance(channel, MQTTClientThread):
             text = channel.broker_address + ':' + str(channel.broker_port)
+        elif isinstance(channel, BLEWorker):
+            text = channel.address
         else:
             text = "Unknown"
         return text
@@ -94,6 +96,8 @@ class Channel_info(QObject):
         if isinstance(channel, TcpClient):
             channel.data_sended.emit(message)
         if isinstance(channel, ClientWorker):
+            channel.data_sended.emit(message)
+        if isinstance(channel, BLEWorker):
             channel.data_sended.emit(message)
   
 

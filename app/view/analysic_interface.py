@@ -17,7 +17,8 @@ import sys,os,time,copy
 from PyQt5.QtSvg import QSvgGenerator
 from functools import partial
 from ..plugins.frame_cco import FrameCCO
-
+from ..components.Splitter import Splitter
+from ..plugins.frame_analysic import FrameProcessor
 class CustomTreeWidgetItem(QtWidgets.QTreeWidgetItem):
     def __init__(self, parent, text_list):
         self.data = text_list  # Store the associated data
@@ -50,8 +51,8 @@ class CustomTreeWidget(QtWidgets.QTreeWidget):
     custom_header = QtCore.pyqtSignal(str)  # Define a custom signal
     custom_signal = QtCore.pyqtSignal(QtWidgets.QTreeWidgetItem)
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.expend_status = True
         self.last_item = None
         self.old_color = {}
@@ -167,6 +168,9 @@ class CustomTreeWidget(QtWidgets.QTreeWidget):
     def collapseAll(self):
         self.expend_status = False
         super().collapseAll()
+    def is_expand(self):
+        return self.expend_status
+
 
     def export(self, type):
         try:
@@ -274,6 +278,7 @@ class Alalysic(QWidget):
         self.tools_window = None
         self.current_screen_number = 0xFF
         self.custom_textinput = None
+        self.analisicthread = None
 
         self.__initWidget()
 
@@ -391,11 +396,11 @@ class Alalysic(QWidget):
         if input_text == '':
             return
         protocol.frame_fun.globregion = cfg.get(cfg.Region)
-        print(protocol.frame_fun.globregion)
-        # Process the input text and generate the tree data
-        show_data = []
-        framedis = FrameCsg()
-        meter_task = MeterTask()
+
+        if self.analisicthread is None:
+            self.analisicthread = FrameProcessor()
+            self.analisicthread.analisic_finish.connect(self.add_reult)
+            self.analisicthread.start()
         # Add tree data using add data function
         try:
             frame = bytearray.fromhex(input_text)
@@ -411,30 +416,16 @@ class Alalysic(QWidget):
 
             # Clear any previous selections
             cursor.clearSelection()
-            # print(self.input_text.toPlainText())
-            # 将字符串拆分为每两个字符
-            # 去除换行符和空格
+
             # 将每两个字符转换为一个十六进制数
             frame = [int(hex_str[i:i + 2], 16) for i in range(0, len(hex_str), 2)]
+            self.analisicthread.add_frame(frame)
 
-            if protocol.is_dlt645_frame(frame):
-                protocol.FRAME_645.Analysis_645_fram_by_afn(frame, show_data,0)
-            elif framedis.is_csg_frame(frame):
-                framedis.Analysis_csg_frame_by_afn(frame,show_data,0)
-            elif meter_task.is_meter_task(frame):
-                meter_task.analysic_meter_task(frame,show_data, 0)
-            elif FrameCCO.is_cco_frame(frame):
-                FrameCCO.Analysis_cco_frame_by_afn(frame,show_data,0)
-                                
-            self.tree_widget.create_tree(None, show_data, self.item_position)
-            self.tree_widget.expandAll()
-            self.reconnect_text_changed()
         except Exception as e:
             # 处理特定异常（如果需要）
             print(f"捕获到一个异常: {e}")
             log_config.log_error(f"报文：{input_text} \n 捕获到一个异常: {e}", exc_info=True)
             if isinstance(e, ValueError):
-                # frame_fun.CustomMessageBox("告警",'输入的字符中包含非十六进制字符！')
                 if self.is_connected:
                     self.disconnect_text_changed()
                 # 保存当前文本内容
@@ -451,6 +442,20 @@ class Alalysic(QWidget):
                 import traceback
                 traceback.print_exception(exc_type, exc_value, exc_traceback)
                 self.reconnect_text_changed()
+
+    def add_reult(self, result):
+        try:
+            frame_result = result["结果"]
+            self.tree_widget.create_tree(None, frame_result, self.item_position)
+            self.tree_widget.expandAll()
+            self.reconnect_text_changed()
+        except Exception as e:
+            # 获取异常信息
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            # 打印原始回溯信息
+            import traceback
+            traceback.print_exception(exc_type, exc_value, exc_traceback)
+            self.reconnect_text_changed()
 
 class ViewAnalysic(GalleryInterface):
     """ Icon interface """

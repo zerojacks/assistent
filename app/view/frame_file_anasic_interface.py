@@ -2,13 +2,14 @@ from ..common.problam_analysic import ProblemAnalysic
 from ..common.translator import Translator
 from ..common.style_sheet import StyleSheet
 from .gallery_interface import GalleryInterface
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout,QFileDialog,QPushButton,QWidget,QLabel,QFormLayout
-from qfluentwidgets import PrimaryPushButton,PushButton,ToolButton,InfoBar,InfoBarPosition,InfoBarIcon
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout,QFileDialog,QPushButton,QWidget,QLabel,QFormLayout,QApplication
+from qfluentwidgets import FluentIconBase,PushButton,ToolButton,InfoBar,InfoBarPosition,ExpandSettingCard,ScrollArea,InfoBarIcon
 from ..common.icon import Icon
 from ..common.config import cfg
 from ..common.problam_analysic import FileChooserWidget
 from qfluentwidgets import FluentIcon as FIF
 from PyQt5.QtCore import Qt,QCoreApplication,pyqtSignal,QObject
+from PyQt5.QtGui import QIcon
 from .analysic_interface import CustomTreeWidget
 import threading
 import queue
@@ -17,100 +18,98 @@ from ..plugins.MeterTask import MeterTask
 from ..plugins.frame_cco import FrameCCO
 from ..plugins.frame_fun import FrameFun as frame_fun
 from ..plugins import protocol
+from ..plugins.frame_analysic import FrameProcessor
 from ..common.signal_bus import signalBus
-
-class FrameProcessor(QObject):
-    analisic_finish = pyqtSignal(dict)
-    def __init__(self):
-        super().__init__()
-        self.frame_queue = queue.Queue()
-        self.processing_thread = None
-        self.running = False
+from typing import Union
 
 
-    def process_frame(self, frame):
-        try:
-            frame_fun.globregion = cfg.get(cfg.Region)
-            print(frame_fun.globregion)
+class DisplayResult(ExpandSettingCard):
+    def __init__(self, icon: Union[str, QIcon, FluentIconBase], data, parent=None):
+        super().__init__(icon, "解析结果", None, parent)
+        self.setExpand(False)
+        self.isExpand = False
+        # self.card.removeEventFilter(self.card)
+        # super().scrollLayout.removeWidget(super().view)
+        # super().view.setParent(None)
+        self.data = data
+        self.card.expandButton.clicked.connect(self.value_change_handel)
+        self.expandAni.valueChanged.connect(self.ExpandValueChanged)
+        self.expandAni.valueChanged.disconnect(self._onExpandValueChanged)
+        self.card.expandButton.clicked.disconnect(self.toggleExpand)
 
-            # Process the input text and generate the tree data
-            show_data = []
-            result = {}
-            framedis = FrameCsg()
-            meter_task = MeterTask()
+        self.set_data(self.data)
 
-            # Add tree data using add data function
-            if protocol.is_dlt645_frame(frame):
-                protocol.FRAME_645.Analysis_645_fram_by_afn(frame, show_data, 0)
-            elif framedis.is_csg_frame(frame):
-                framedis.Analysis_csg_frame_by_afn(frame, show_data, 0)
-            elif meter_task.is_meter_task(frame):
-                meter_task.analysic_meter_task(frame, show_data, 0)
-            elif FrameCCO.is_cco_frame(frame):
-                FrameCCO.Analysis_cco_frame_by_afn(frame, show_data, 0)
-            
-            result['报文'] = frame_fun.get_data_str_with_space(frame)
-            result['结果'] = show_data
-
-            self.analisic_finish.emit(result)
-        except Exception as e:
-            print(e)
-
-    def worker(self):
-        while self.running:
-            try:
-                frame = self.frame_queue.get(timeout=1)  # Timeout to allow checking self.running
-                self.process_frame(frame)
-                self.frame_queue.task_done()
-            except queue.Empty:
-                continue
-
-    def start(self):
-        self.running = True
-        self.processing_thread = threading.Thread(target=self.worker)
-        self.processing_thread.daemon = True  # This makes the thread exit when the main program exits
-        self.processing_thread.start()
-
-    def stop(self):
-        self.running = False
-        if self.processing_thread:
-            self.processing_thread.join()
-
-    def add_frame(self, frame):
-        self.frame_queue.put(frame)
-
-class DisplayResult(QWidget):
-    """ Display result """
-    def __init__(self, parent=None):
-        super().__init__()
-        self.setObjectName('DisplayResult')
-        self.form_layout = QFormLayout(self)
-        self.form_layout.setContentsMargins(0, 0, 0, 0)
-        self.analisicthread = FrameProcessor()
-        self.analisicthread.analisic_finish.connect(self.add_reult)
-        self.analisicthread.start()
-        signalBus.sendmessage.connect(self.add_frame)
-        signalBus.messagereceive.connect(self.add_frame)
-
-    def add_reult(self, result):
+    def set_data(self, result):
         try:
             frame = result["报文"]
             frame_result = result["结果"]
-            contentlabel = QLabel("报文:")
-            resultlabel = QLabel("结果:")
-            framelabel = QLabel(frame)
-            tree_widget = CustomTreeWidget()
+            self.card.setTitle(frame)
+            self.view = CustomTreeWidget(self.scrollWidget)
             item_position = {}
-            tree_widget.create_tree(None, frame_result, item_position)
-            tree_widget.collapseAll()
-            self.form_layout.addRow(contentlabel, framelabel)
-            self.form_layout.addRow(resultlabel, tree_widget)
+            result_list = []
+            frame_fun.add_data(result_list, "帧域", "数据", "说明", [0,0], frame_result)
+            print(result_list)
+            self.view.create_tree(None, result_list, item_position)
+            self.view.setHeaderHidden(True)
+            self.view.collapseAll()
+            self.view.setFixedHeight(50)
+            self.scrollLayout.addWidget(self.view)
+            self.view.expanded.connect(lambda: self.update_size(self.view))
+            self._adjustViewSize() 
         except Exception as e:
             print(e)
 
-    def add_frame(self, frame):
-        frame = frame_fun.bytes_to_decimal_list(frame)
-        self.analisicthread.add_frame(frame)
+    def ExpandValueChanged(self):
+        self._onExpandValueChanged()
+    
+    def value_change_handel(self):
+        if self.isExpand:
+            self.view.collapseAll()
+        else:
+            self.view.expandAll()
+        
+        self.toggleExpand()
+    
+    def toggleExpand(self):
+        """ toggle expand status """
+        self.setExpand(not self.isExpand)
+
+    def setExpand(self, isExpand: bool):
+        """ set the expand status of card """
+        if self.isExpand == isExpand:
+            return
+
+        # update style sheet
+        self.isExpand = isExpand
+        self.setProperty('isExpand', isExpand)
+        self.setStyle(QApplication.style())
+
+        # start expand animation
+        if isExpand:
+            h = self.view.sizeHint().height()
+            self.verticalScrollBar().setValue(200)
+            self.expandAni.setStartValue(h)
+            self.expandAni.setEndValue(0)
+        else:
+            self.expandAni.setStartValue(0)
+            self.expandAni.setEndValue(self.verticalScrollBar().maximum())
+
+        self.expandAni.start()
+        self.card.expandButton.setExpand(isExpand)
+
+    def update_size(self, view:CustomTreeWidget):
+        if view.is_expand():
+            print("view expand")
+            view.setFixedHeight(200)
+        else:
+            print("view noexpand")
+            view.setFixedHeight(50)
+        
+        self.viewLayout.update()
+        QCoreApplication.processEvents()
+        self._adjustViewSize()
+        
+        
     
 class FrameFileInterface(GalleryInterface):
     """ Icon interface """
@@ -123,5 +122,36 @@ class FrameFileInterface(GalleryInterface):
             parent=parent
         )
         self.setObjectName('FrameFileInterface')
-        self.result = DisplayResult()  
-        self.vBoxLayout.addWidget(self.result, 0, Qt.AlignRight)
+        self.analisicthread = FrameProcessor()
+        self.analisicthread.analisic_finish.connect(self.add_reult)
+        # self.analisicthread.start()
+        # signalBus.sendmessage.connect(self.add_frame)
+        # signalBus.messagereceive.connect(self.add_frame) 
+
+    def add_frame(self, object, frame):
+        print("add frame",frame)
+        frame = frame_fun.bytes_to_decimal_list(frame)
+        self.analisicthread.add_frame(frame)
+
+    def add_reult(self, result):
+        try:
+            analysiz_card = DisplayResult(
+                FIF.EDUCATION,
+                result,
+                parent=self
+            )
+            self.vBoxLayout.addWidget(analysiz_card)
+            return True
+        except Exception as e:
+            # infoBar = InfoBar(
+            #     icon=InfoBarIcon.ERROR,
+            #     title=self.tr('错误'),
+            #     content=f"配置文件{conf_path}解析失败",
+            #     orient=Qt.Vertical,
+            #     isClosable=True,
+            #     duration=2000,
+            #     position=InfoBarPosition.TOP_RIGHT,
+            #     parent=self
+            # )
+            # infoBar.show()
+            return False

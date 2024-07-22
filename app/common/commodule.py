@@ -6,6 +6,7 @@ class CommType(Enum):
     TCP_SERVICE = 1,
     SERIAL = 2,
     MQTT = 3,
+    BLUETOOTH=4,
 
 class SendAndReceive(QObject):
     connecttype = []

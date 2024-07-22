@@ -55627,6 +55627,112 @@
 			<unit>分钟</unit>
 		</splitByLength>
 	</dataItem>
+	<dataItem id="06E00001" protocol="csg13" region="南网">
+		<name>用户负荷识别数据</name>
+		<length>42</length>
+		<splitByLength>
+			<name>电器类型1编号</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型1组合有功电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型1使用时间</name>
+			<length>2</length>
+			<type>BIN</type>
+			<unit>分钟</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型2编号</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型2组合有功电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型2使用时间</name>
+			<length>2</length>
+			<type>BIN</type>
+			<unit>分钟</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型3编号</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型3组合有功电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型3使用时间</name>
+			<length>2</length>
+			<type>BIN</type>
+			<unit>分钟</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型4编号</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型4组合有功电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型4使用时间</name>
+			<length>2</length>
+			<type>BIN</type>
+			<unit>分钟</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型5编号</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型5组合有功电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型5使用时间</name>
+			<length>2</length>
+			<type>BIN</type>
+			<unit>分钟</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型6编号</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型6组合有功电能</name>
+			<length>4</length>
+			<unit>kWh</unit>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>电器类型6使用时间</name>
+			<length>2</length>
+			<type>BIN</type>
+			<unit>分钟</unit>
+		</splitByLength>
+	</dataItem>
 	<dataItem id="E1008054" protocol="csg13" region="南网">
 		<name>电压超限日统计数据</name>
 		<length>144</length>
@@ -58018,6 +58124,60 @@
 			<type>CSG13</type>
 		</splitByLength>
 	</dataItem>	
+ 	<dataItem id="E1800030" protocol="csg13" region="南网">
+        <name>CPU 运行信息</name>
+        <length>10</length>
+        <splitByLength>
+            <name>CPU 温度</name>
+            <decimal>1</decimal>
+            <length>2</length>
+            <type>BCD</type>
+            <unit>℃</unit>
+        </splitByLength>
+        <splitByLength>
+            <name>CPU 使用率</name>
+            <decimal>2</decimal>
+            <length>3</length>
+            <type>BCD</type>
+            <unit>%</unit>
+        </splitByLength>
+        <splitByLength>
+            <name>内存占用率</name>
+            <decimal>2</decimal>
+            <length>2</length>
+            <type>BCD</type>
+            <unit>%</unit>
+        </splitByLength>
+        <splitByLength>
+            <name>磁盘使用率</name>
+            <decimal>2</decimal>
+            <type>BCD</type>
+            <length>3</length>
+            <unit>%</unit>
+        </splitByLength>
+    </dataItem>
+    <dataItem id="E1800031" protocol="csg13" region="南网">
+        <name>系统使用信息</name>
+        <length>10</length>
+        <splitByLength>
+            <name>内存使用数量</name>
+            <length>3</length>
+            <type>BCD</type>
+            <unit>MB</unit>
+        </splitByLength>
+        <splitByLength>
+            <name>磁盘使用数量</name>
+            <length>3</length>
+            <type>BCD</type>
+            <unit>MB</unit>
+        </splitByLength>
+        <splitByLength>
+            <name>运行时间</name>
+            <length>4</length>
+            <type>BCD</type>
+            <unit>s</unit>
+        </splitByLength>
+    </dataItem>
 	<dataItem id="E1800033" protocol="csg13" region="南网">
 		<name>台区户变关系识别状态</name>
 		<length>3</length>

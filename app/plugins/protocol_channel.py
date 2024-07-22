@@ -1,4 +1,4 @@
-from ..plugins.signalCommunication import SerialPortThread,MQTTClientThread,TcpClient,ClientWorker,MqttMessageDetails
+from ..plugins.signalCommunication import SerialPortThread,MQTTClientThread,TcpClient,ClientWorker,MqttMessageDetails,BLEWorker
 from PyQt5.QtCore import QObject,pyqtSlot,pyqtSignal,QTimer,QThread
 from .frame_fun import FrameFun as frame_fun
 import binascii,threading,queue
@@ -22,22 +22,21 @@ class AsyncCommunicator(QObject):
 
     async def send_and_receive(self, index, send_signal, timeout=10):
         try:
-            print("send data", datetime.now())
-            await self.send_signal(send_signal)
+            self.send_signal(send_signal)
             received_data = await self.receive_signal(timeout)
             if self.callback and received_data is not None:
-                print("receive data", datetime.now())
                 self.callback(index, received_data)
         except asyncio.TimeoutError:
             if not self.stop_flag:
                 print("Operation timed out")
         except asyncio.CancelledError:
             print("send_and_receive Operation cancelled")
+        except Exception as e:
+            print("send_and_receive Exception", e)
 
-    async def send_signal(self, frame):
+    def send_signal(self, frame):
         frame_bytearray = bytearray(frame)
         message = bytes(frame_bytearray)
-        print("send_message", frame, message)
         self.dir, self.prm, self.seq, self.afn, self.adress = get_frame_info(frame)
         print("send dir, prm, seq, afn, adress", self.dir, self.prm,self.seq,self.afn, self.adress)
         if self.channel is None:
@@ -48,6 +47,11 @@ class AsyncCommunicator(QObject):
             self.channel.data_sended.emit(message)
         elif isinstance(self.channel, ClientWorker):
             self.channel.data_sended.emit(message)
+        elif isinstance(self.channel, BLEWorker):
+            try:
+                self.channel.data_sended.emit(message)
+            except Exception as e:
+                print("send_signal error",e)
 
     async def receive_signal(self, timeout):
         print("Waiting to receive signal...\n")
@@ -72,8 +76,13 @@ class AsyncCommunicator(QObject):
 
     @pyqtSlot(bytes)
     def on_receive_data(self, data):
+        print("data received", data)
         rec_frame = frame_fun.bytes_to_decimal_list(data)
         if rec_frame is None:
+            return
+        print("reveice frame", rec_frame)
+        framedis = FrameCsg()
+        if framedis.is_csg_frame(rec_frame) == False:
             return
         dir, prm, seq, afn, adress = get_frame_info(rec_frame)
         print("reveice dir, prm, seq, afn, adress", dir, prm, seq, afn, adress, datetime.now())
@@ -99,6 +108,8 @@ class AsyncCommunicator(QObject):
                 self.channel.data_received.connect(self.on_receive_data)
             elif isinstance(self.channel, ClientWorker):
                 self.channel.receive_data.connect(self.on_client_receive_data)
+            elif isinstance(self.channel, BLEWorker):
+                self.channel.data_received.connect(self.on_receive_data)
     
     def close_slot(self):
         if self.channel is not None:
@@ -109,6 +120,8 @@ class AsyncCommunicator(QObject):
                 self.channel.data_received.disconnect(self.on_receive_data)
             elif isinstance(self.channel, ClientWorker):
                 self.channel.receive_data.disconnect(self.on_client_receive_data)
+            elif isinstance(self.channel, BLEWorker):
+                self.channel.data_received.disconnect(self.on_receive_data)
 
 class WorkerThread(QThread):
     result_signal = pyqtSignal(object)

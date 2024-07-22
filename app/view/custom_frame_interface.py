@@ -430,9 +430,11 @@ class CustomframeResult(QWidget):
             data = self.framearea.toPlainText()
             if len(data) <= 0:
                 return
+            
+            timeout = self.chanel_box.get_timeout()
             frame = frame_fun.get_frame_list_from_str(data).copy()    
             self.set_readbutton_state(False)
-            self.sendthread = WorkerThread(channel_info[1], 15, self.data_replay)
+            self.sendthread = WorkerThread(channel_info[1], timeout, self.data_replay)
             send_list = []
             send_list.append(frame)
 
@@ -482,7 +484,8 @@ class CustomframeResult(QWidget):
                 return
             
             self.set_setbutton_state(False)
-            self.sendthread = WorkerThread(channel_info[1], 15)
+            timeout = self.chanel_box.get_timeout()
+            self.sendthread = WorkerThread(channel_info[1], timeout)
 
             send_list = []
             for taskid, data in task_id_list.items():
@@ -596,8 +599,6 @@ class CheckboxGrid(QWidget):
             self.selected_indexes = set(range(1, len(self.checkboxes)))
         else:
             self.selected_indexes.clear()
-
-        print("Selected indexes:", self.selected_indexes)
 
     def get_selected_indexes(self):
         return self.selected_indexes.copy()
@@ -779,7 +780,8 @@ class ParamFrame(QWidget):
         if any(value in item_array for value in values_to_check) and len(item_array) == 1:
             if self.switchButton.isChecked():
                 data = self.get_item_mask_data()
-                item_dic[item_array[0]] = frame_fun.get_data_str_order(data)
+                hex_values = {}
+                hex_values[0]= frame_fun.get_data_str_order(data)
             else:
                 data = None
                 hex_values = [data] * len(item_array)
@@ -2067,7 +2069,8 @@ class MeterTaskInterface(QWidget):
                     return
                 
             self.set_readbutton_state(False)
-            self.sendthread = WorkerThread(channel_info[1], 10, self.data_replay)
+            timeout = self.chanel_box.get_timeout()
+            self.sendthread = WorkerThread(channel_info[1], timeout, self.data_replay)
             send_list = []
             for taskid, data in task_id_list.items():
                 frame = [0x00] * FramePos.POS_DATA.value
@@ -2130,7 +2133,8 @@ class MeterTaskInterface(QWidget):
                 return
             
             self.set_setbutton_state(False)
-            self.sendthread = WorkerThread(channel_info[1], 15)
+            timeout = self.chanel_box.get_timeout()
+            self.sendthread = WorkerThread(channel_info[1], timeout)
 
             send_list = []
             item_dic = {}
@@ -2905,7 +2909,8 @@ class NoramlTaskInterface(QWidget):
                     return
                 
             self.set_readbutton_state(False)
-            self.sendthread = WorkerThread(channel_info[1], 15, self.data_replay)
+            timeout = self.chanel_box.get_timeout()
+            self.sendthread = WorkerThread(channel_info[1], timeout, self.data_replay)
             send_list = []
             for taskid, data in task_id_list.items():
                 frame = [0x00] * FramePos.POS_DATA.value
@@ -2971,7 +2976,8 @@ class NoramlTaskInterface(QWidget):
                 return
             
             self.set_setbutton_state(False)
-            self.sendthread = WorkerThread(channel_info[1], 15)
+            timeout = self.chanel_box.get_timeout()
+            self.sendthread = WorkerThread(channel_info[1], timeout)
 
             send_list = []
             item_dic = {}
