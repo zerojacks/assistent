@@ -29,6 +29,11 @@ class CustomMessageBox(QMessageBox):
             print("User clicked OK")
         else:
             print("User clicked Cancel or closed the dialog")
+            
+class CustomError(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
 
 class FrameFun:
 

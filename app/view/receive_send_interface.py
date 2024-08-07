@@ -473,6 +473,9 @@ class NormalSendReceive(BaseSendReceive):
         splitter = QSplitter(self)
         splitter.setOrientation(Qt.Vertical)
 
+        splitter.setStretchFactor(0, 8)
+        splitter.setStretchFactor(1, 2)
+
         # Upper Part (sendandreceive)
         size_policy_upper = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.sendandreceive.setSizePolicy(size_policy_upper)

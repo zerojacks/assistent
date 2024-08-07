@@ -19,6 +19,8 @@ from functools import partial
 from ..plugins.frame_cco import FrameCCO
 from ..components.Splitter import Splitter
 from ..plugins.frame_analysic import FrameProcessor
+from ..plugins.frame_fun import CustomError,CustomMessageBox
+
 class CustomTreeWidgetItem(QtWidgets.QTreeWidgetItem):
     def __init__(self, parent, text_list):
         self.data = text_list  # Store the associated data
@@ -400,6 +402,7 @@ class Alalysic(QWidget):
         if self.analisicthread is None:
             self.analisicthread = FrameProcessor()
             self.analisicthread.analisic_finish.connect(self.add_reult)
+            self.analisicthread.err_exception.connect(self.err_exception)
             self.analisicthread.start()
         # Add tree data using add data function
         try:
@@ -456,6 +459,9 @@ class Alalysic(QWidget):
             import traceback
             traceback.print_exception(exc_type, exc_value, exc_traceback)
             self.reconnect_text_changed()
+
+    def err_exception(self, err:CustomError):
+        CustomMessageBox("告警",f"{err.message}")
 
 class ViewAnalysic(GalleryInterface):
     """ Icon interface """

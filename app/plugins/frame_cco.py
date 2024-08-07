@@ -1,6 +1,6 @@
 from .frame_fun import FrameFun as frame_fun
 from ..plugins.protocol import PraseFrameData
-from ..plugins.frame_fun import CustomMessageBox
+from ..plugins.frame_fun import CustomError
 from ..common.config import ProtocolInfo,ConfigManager
 FRAME_START = 0x68
 FRAME_END = 0x16
@@ -194,9 +194,9 @@ class FrameCCO(object):
             frame_fun.add_data(result, "数据标识编码", frame_fun.get_data_str_with_space(di), dis_data_identifier, [index + 0, index + 4], diresult)
             frame_fun.add_data(result, "数据标识内容", frame_fun.get_data_str_with_space(sub_datament), f"数据内容：{frame_fun.get_data_str_reverser(sub_datament)}",[index + 4, index + 4 + sub_length],item_data)
         else:
-            CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
-            pass
-
+            err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
+            raise err
+        
 
     @classmethod
     def Analysic_cco_end_frame(cls, data_content, result, dir, index=0):

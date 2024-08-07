@@ -1,7 +1,7 @@
 from asyncio.windows_events import ERROR_CONNECTION_ABORTED
 from xml.dom.expatbuilder import FragmentBuilder
 from ..plugins.frame_fun import FrameFun as frame_fun
-from ..plugins.frame_fun import CustomMessageBox
+from ..plugins.frame_fun import CustomError
 from ..plugins.protocol import PraseFrameData, FRAME_645
 from PyQt5.QtWidgets import QMessageBox
 import re,threading
@@ -641,6 +641,10 @@ def guest_next_data_is_cur_item_data(item_element, data_segment, data_time):
         next_item = frame_fun.get_data_str_reverser(data_segment[2:6])
         if next_item == item_element.get('id'):
             return False
+        
+        data_item_elem = ConfigManager.get_config_xml(next_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+        if data_item_elem is not None:
+            return False
         if is_valid_bcd_time(data_segment[length:length+6]):
             if data_time is not None:
                 return is_within_one_month(data_segment[length:length+6], data_time)
@@ -846,8 +850,8 @@ def Analysic_csg_custom_head_frame(frame, result_list, start_pos):
         frame_fun.add_data(result_list, "内部规约", frame_fun.get_data_str_with_space(frame[:48]), restlt_str,[start_pos,start_pos + 84])
     except Exception as e:
         print(e)
-        CustomMessageBox("告警",'解析数据失败！')
-        return
+        err = CustomError('解析数据失败！')
+        raise err
 
 def Analysic_csg_ack_frame(frame, dir, prm, result_list,start_pos):
     data_segment = frame[16:-2]
@@ -868,7 +872,7 @@ def Analysic_csg_ack_frame(frame, dir, prm, result_list,start_pos):
 
     data_segment = data_segment[:length]
     pw = False
-
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -911,7 +915,7 @@ def Analysic_csg_ack_frame(frame, dir, prm, result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -920,7 +924,8 @@ def Analysic_csg_ack_frame(frame, dir, prm, result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
-    
+    if err:
+        raise err
 
 def Analysic_csg_link_frame(frame,dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
@@ -943,6 +948,7 @@ def Analysic_csg_link_frame(frame,dir, prm,result_list,start_pos):
     data_segment = valid_data_segment[:length]
     pw = False
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -983,7 +989,7 @@ def Analysic_csg_link_frame(frame,dir, prm,result_list,start_pos):
                     sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                     err_str = prase_err_code_result(sub_datament[0]);
                 else:
-                    CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                    err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                     break
                 dis_data_identifier = "数据标识编码：" + f"[{data_item}]"
             if dir == 1 and prm == 0:
@@ -1004,7 +1010,7 @@ def Analysic_csg_link_frame(frame,dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
 
     if pw:
@@ -1014,6 +1020,9 @@ def Analysic_csg_link_frame(frame,dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
+
+    if err:
+        raise err
 
 def Analysic_csg_write_frame(frame, dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
@@ -1036,6 +1045,7 @@ def Analysic_csg_write_frame(frame, dir, prm,result_list,start_pos):
     data_segment = valid_data_segment[:length]
     pw = False
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -1071,7 +1081,7 @@ def Analysic_csg_write_frame(frame, dir, prm,result_list,start_pos):
                     sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                     err_str = prase_err_code_result(sub_datament[0]);
                 else:
-                    CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                    err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                     break
                 dis_data_identifier = "数据标识编码：" + f"[{data_item}]"
             if dir == 1 and prm == 0:
@@ -1091,7 +1101,7 @@ def Analysic_csg_write_frame(frame, dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -1100,7 +1110,8 @@ def Analysic_csg_write_frame(frame, dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
-
+    if err:
+        raise err
 
 def Analysic_csg_security_frame(frame, dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
@@ -1123,6 +1134,7 @@ def Analysic_csg_security_frame(frame, dir, prm,result_list,start_pos):
 
     data_segment = valid_data_segment[:length]
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -1161,7 +1173,7 @@ def Analysic_csg_security_frame(frame, dir, prm,result_list,start_pos):
             else:
                 if dir == 1 and prm == 0:
                     pw = guest_is_exit_pw(length,data_segment)
-                    CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                    err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                     break
                 else:
                     sub_length = 0
@@ -1178,7 +1190,7 @@ def Analysic_csg_security_frame(frame, dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -1187,7 +1199,9 @@ def Analysic_csg_security_frame(frame, dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
-
+    
+    if err:
+        raise err
 
 def Analysic_csg_read_cur_frame(frame, dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
@@ -1210,6 +1224,7 @@ def Analysic_csg_read_cur_frame(frame, dir, prm,result_list,start_pos):
 
     data_segment = valid_data_segment[:length]
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -1244,7 +1259,7 @@ def Analysic_csg_read_cur_frame(frame, dir, prm,result_list,start_pos):
             else:
                 if dir == 1 and prm == 0:
                     pw = guest_is_exit_pw(length,data_segment)
-                    CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                    err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                     break
                 else:
                     sub_length = 0
@@ -1261,7 +1276,7 @@ def Analysic_csg_read_cur_frame(frame, dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -1270,6 +1285,9 @@ def Analysic_csg_read_cur_frame(frame, dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
+
+    if err:
+        raise err
 
 
 
@@ -1298,6 +1316,7 @@ def Analysic_csg_read_history_frame(frame, dir, prm,result_list,start_pos):
     data_time = None
     prase_data = PraseFrameData()
     sub_pos = 0
+    err = None
     while pos < length:
         try:
             if guest_next_data_is_cur_item_data(data_item_elem, data_segment[pos:], data_time) == False:
@@ -1334,7 +1353,7 @@ def Analysic_csg_read_history_frame(frame, dir, prm,result_list,start_pos):
                 if dir == 1 and prm == 0:
                     sub_length = len(data_segment)
                     pw = guest_is_exit_pw(length,data_segment, data_item_elem, data_time, True)
-                    CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                    err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                     break
                 else:
                     sub_length = 0
@@ -1364,7 +1383,7 @@ def Analysic_csg_read_history_frame(frame, dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -1373,7 +1392,8 @@ def Analysic_csg_read_history_frame(frame, dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
-
+    if err:
+        raise err
 
 def Analysic_csg_read_param_frame(frame, dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
@@ -1396,6 +1416,7 @@ def Analysic_csg_read_param_frame(frame, dir, prm,result_list,start_pos):
 
     data_segment = valid_data_segment[:length]
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -1431,7 +1452,7 @@ def Analysic_csg_read_param_frame(frame, dir, prm,result_list,start_pos):
             else:
                 if dir == 1 and prm == 0:
                     pw = guest_is_exit_pw(length,data_segment)
-                    CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                    err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                     break
                 else:
                     sub_length = 0
@@ -1448,7 +1469,7 @@ def Analysic_csg_read_param_frame(frame, dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -1457,7 +1478,8 @@ def Analysic_csg_read_param_frame(frame, dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
-
+    if err:
+        raise err
 
 def Analysic_csg_read_task_frame(frame, dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
@@ -1505,6 +1527,7 @@ def Analysic_csg_read_task_frame(frame, dir, prm,result_list,start_pos):
     data_item_elem = None
     data_time=None
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             if guest_next_data_is_cur_item_data(data_item_elem, data_segment[pos:], data_time) == False:
@@ -1545,7 +1568,7 @@ def Analysic_csg_read_task_frame(frame, dir, prm,result_list,start_pos):
                 else:
                     sub_length = 0#下行读取报文
             else:
-                CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                 break
 
             if dir == 1:
@@ -1577,7 +1600,7 @@ def Analysic_csg_read_task_frame(frame, dir, prm,result_list,start_pos):
                 if num >= item_count * pncount:
                     break
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     
     if dir == 1:
@@ -1597,6 +1620,8 @@ def Analysic_csg_read_task_frame(frame, dir, prm,result_list,start_pos):
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
 
+    if err:
+        raise err
 def Analysic_csg_read_alarm_frame(frame, dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
     tpv = get_afn_and_seq_result(frame[14:16], start_pos + 14,result_list)
@@ -1618,6 +1643,7 @@ def Analysic_csg_read_alarm_frame(frame, dir, prm,result_list,start_pos):
 
     data_segment = valid_data_segment[:length]
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -1653,7 +1679,7 @@ def Analysic_csg_read_alarm_frame(frame, dir, prm,result_list,start_pos):
             else:
                 if dir == 1:
                     pw = guest_is_exit_pw(length,data_segment)
-                    CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                    err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                     break
                 else:
                     sub_length = 0
@@ -1679,7 +1705,7 @@ def Analysic_csg_read_alarm_frame(frame, dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -1688,7 +1714,8 @@ def Analysic_csg_read_alarm_frame(frame, dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
-
+    if err:
+        raise err
 def Analysic_csg_read_event_frame(frame, dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
     tpv = get_afn_and_seq_result(frame[14:16], start_pos + 14,result_list)
@@ -1710,6 +1737,7 @@ def Analysic_csg_read_event_frame(frame, dir, prm,result_list,start_pos):
 
     data_segment = valid_data_segment[:length]
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -1745,7 +1773,7 @@ def Analysic_csg_read_event_frame(frame, dir, prm,result_list,start_pos):
             else:
                 if dir == 1 and prm == 0:
                     pw = guest_is_exit_pw(length,data_segment)
-                    CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                    err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                     break
                 else:
                     sub_length = 0
@@ -1771,7 +1799,7 @@ def Analysic_csg_read_event_frame(frame, dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -1780,7 +1808,8 @@ def Analysic_csg_read_event_frame(frame, dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
-
+    if err:
+        raise err
 def Analysic_csg_relay_frame(frame, dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
     tpv = get_afn_and_seq_result(frame[14:16], start_pos + 14,result_list)
@@ -1802,6 +1831,7 @@ def Analysic_csg_relay_frame(frame, dir, prm,result_list,start_pos):
 
     data_segment = valid_data_segment[:length]
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -1855,7 +1885,7 @@ def Analysic_csg_relay_frame(frame, dir, prm,result_list,start_pos):
                 dis_data_identifier = "数据标识编码：" + f"[{data_item}]" + "-" + name
             else:
                 pw = guest_is_exit_pw(length,data_segment)
-                CustomMessageBox("警告",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                err = CustomError("警告",'未查找到数据标识：'+ data_item + '请检查配置文件！')
                 break
 
             frame_fun.add_data(sub_result, f"<第{num + 1}组>数据标识编码DI",frame_fun.get_data_str_with_space(item),dis_data_identifier,[index + pos, index + pos + 4])
@@ -1868,7 +1898,7 @@ def Analysic_csg_relay_frame(frame, dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -1877,7 +1907,9 @@ def Analysic_csg_relay_frame(frame, dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[-7, -2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [16,-2],sub_result)
-
+    if err:
+        raise err
+    
 def Analysic_csg_topo_frame(frame, dir, prm,result_list,start_pos):
     valid_data_segment = frame[16:-2]
     tpv = get_afn_and_seq_result(frame[14:16], start_pos + 14,result_list)
@@ -1899,6 +1931,7 @@ def Analysic_csg_topo_frame(frame, dir, prm,result_list,start_pos):
 
     data_segment = valid_data_segment[:length]
     prase_data = PraseFrameData()
+    err = None
     while pos < length:
         try:
             DA = data_segment[pos:pos + 2]
@@ -1934,7 +1967,7 @@ def Analysic_csg_topo_frame(frame, dir, prm,result_list,start_pos):
             else:
                 if dir == 1 and prm == 0:
                     pw = guest_is_exit_pw(length,data_segment)
-                    CustomMessageBox("告警",'未查找到数据标识：'+ data_item + '请检查配置文件！')
+                    err = CustomError('未查找到数据标识：'+ data_item + '请检查配置文件！')
                     break
                 else:
                     sub_length = 0
@@ -1950,7 +1983,7 @@ def Analysic_csg_topo_frame(frame, dir, prm,result_list,start_pos):
                 if pw:
                     length -= 16
         except Exception as e:
-            CustomMessageBox("告警",'解析数据失败！')
+            err = CustomError('解析数据失败！')
             break
     if pw:
         pw_str = "PW由16个字节组成，是由主站按系统约定的认证算法产生，并在主站发送的报文中下发给终端，由终端进行校验认证。"
@@ -1959,3 +1992,5 @@ def Analysic_csg_topo_frame(frame, dir, prm,result_list,start_pos):
         tpv_str = prase_tpv_data(tpv_data)
         frame_fun.add_data(sub_result, f"时间标签Tp",frame_fun.get_data_str_with_space(tpv_data),tpv_str,[start_pos + len(frame)-7, start_pos + len(frame)-2])
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [index, start_pos + len(frame)-2],sub_result)
+    if err:
+        raise err

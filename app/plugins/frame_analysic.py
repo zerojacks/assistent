@@ -9,9 +9,11 @@ from ..common.signal_bus import signalBus
 from typing import Union
 from PyQt5.QtCore import Qt,QCoreApplication,pyqtSignal,QObject
 from ..common.config import cfg
+from ..plugins.frame_fun import CustomError,CustomMessageBox
 
 class FrameProcessor(QObject):
     analisic_finish = pyqtSignal(dict)
+    err_exception = pyqtSignal(CustomError)
     def __init__(self):
         super().__init__()
         self.frame_queue = queue.Queue()
@@ -40,6 +42,13 @@ class FrameProcessor(QObject):
             elif FrameCCO.is_cco_frame(frame):
                 FrameCCO.Analysis_cco_frame_by_afn(frame, show_data, 0)
             
+            result['报文'] = frame_fun.get_data_str_with_space(frame)
+            result['结果'] = show_data
+
+            self.analisic_finish.emit(result)
+        except CustomError as e:
+            print(e)
+            self.err_exception.emit(e)
             result['报文'] = frame_fun.get_data_str_with_space(frame)
             result['结果'] = show_data
 

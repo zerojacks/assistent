@@ -899,7 +899,7 @@
         <value key="01">开启</value>
     </dataItem>
 
-    <dataItem id="E80505F1" protocol="CSG16" region="南网">
+    <!-- <dataItem id="E80505F1" protocol="CSG16" region="南网">
         <name>主动上报分钟采集数据</name>
         <length>unknown</length>
         <splitByLength>
@@ -970,5 +970,5 @@
         <length>unknown</length>
         <single>YES</single>
         <type>WITHITEM</type>
-    </template>
+    </template> -->
 </config>

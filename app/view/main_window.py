@@ -23,7 +23,7 @@ from .setting_interface import SettingInterface
 from .text_interface import TextInterface
 from .view_interface import ViewInterface
 from .analysic_interface import ViewAnalysic
-from ..common.config import SUPPORT_URL, cfg
+from ..common.config import SUPPORT_URL, cfg, log_config
 from ..common.icon import Icon
 from ..common.signal_bus import signalBus
 from ..common.translator import Translator
@@ -36,6 +36,7 @@ from .database_interface import DataBaseInterface
 from .app_message_interface import AppMessageInterface
 from ..plugins.update import UpgradeWindows
 from PyQt5.QtCore import QThread
+from ..common.channel_info import channel_info
 
 class MainWindow(FluentWindow):
 
@@ -181,3 +182,11 @@ class MainWindow(FluentWindow):
         if check:
             self.upgrade = UpgradeWindows()
             self.upgrade.check_upgrade()
+
+    def closeEvent(self, event):
+        # 调用资源管理器进行资源清理
+        log_config.close()
+        channel_info.close_channel()
+        # 调用父类的 closeEvent 以确保正常关闭窗口
+        # event.accept()
+        super().closeEvent(event)

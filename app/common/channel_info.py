@@ -99,6 +99,20 @@ class Channel_info(QObject):
             channel.data_sended.emit(message)
         if isinstance(channel, BLEWorker):
             channel.data_sended.emit(message)
+
+    def close_channel(self):
+        for key, value in self.all_channel.items():
+            type, channel, channel_name = value
+            if isinstance(channel, SerialPortThread):
+                channel.stopsingal.emit()
+            elif isinstance(channel, TcpClient):
+                channel.stopsingal.emit()
+            elif isinstance(channel, ClientWorker):
+                channel.stopsingal.emit()
+            elif isinstance(channel, MQTTClientThread):
+                channel.stopsingal.emit()
+            elif isinstance(channel, BLEWorker):
+                channel.stopsignal.emit()
   
 
 channel_info = Channel_info()

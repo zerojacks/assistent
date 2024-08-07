@@ -1,6 +1,6 @@
 
 from .frame_fun import FrameFun
-from .frame_fun import CustomMessageBox
+from .frame_fun import CustomError
 from ..common.config import oad_finder,ConfigManager
 
 MS_TYPE_ALL_USER                      = 0x01  #全部用户类型*/
@@ -282,7 +282,7 @@ class MeterTask:
                 dis_data_identifier = "一组端口号"                
                 return pos,dis_data_identifier
         except Exception as e:
-            CustomMessageBox("告警",f'解析MS：{ms_type}失败！')
+            err = CustomError(f'解析MS：{ms_type}失败！')
         return 0,""
 
     def analysic_meter_task(self, task_content:bytes, result_list, index):
@@ -336,4 +336,4 @@ class MeterTask:
                 FrameFun.add_data(result_list, f"<第{i + 1}组>数据采集",FrameFun.to_hex_string_with_space(task_content[index + start_pos: index + pos]),dis_data_identifier,[index + start_pos, index + pos],sub_result)   
                 i += 1
         except Exception as e:
-            CustomMessageBox("告警",'解析任务失败！')
+            raise CustomError('解析任务失败！')
