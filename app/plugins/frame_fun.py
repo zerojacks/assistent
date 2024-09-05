@@ -295,7 +295,14 @@ class FrameFun:
             return FrameFun.get_data_str_delete_33h_reverse(data)
         else:
             return FrameFun.get_data_str_reverser(data)
-        
+    @staticmethod
+    def get_format_str(input_text:str):
+        formatted_frame = ''
+        hex_str = input_text.replace(' ', '').replace('\n', '')
+        for i in range(0, len(hex_str), 2):
+            formatted_frame += hex_str[i:i + 2] + ' '
+        return formatted_frame.upper()    
+    
     @staticmethod
     def get_frame_list_from_str(input_text):
         hex_str = input_text.replace(' ', '').replace('\n', '')

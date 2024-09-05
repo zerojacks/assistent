@@ -449,6 +449,7 @@ class Alalysic(QWidget):
     def add_reult(self, result):
         try:
             frame_result = result["结果"]
+            print(frame_result)
             self.tree_widget.create_tree(None, frame_result, self.item_position)
             self.tree_widget.expandAll()
             self.reconnect_text_changed()

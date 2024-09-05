@@ -68,3 +68,5 @@ Vir_50040200_List: &Vir_50040200_List
   - { V_oad: 0x85E00101, item_07: 0x05E00101, strat_pos: 145, len_07: 145 } #电表日电压超限统计数据
   - { V_oad: 0x84000101, item_07: 0x04000101, strat_pos: 7, len_07: 7 } #电表日运行信息本月
   - { V_oad: 0x84000102, item_07: 0x04000102, strat_pos: 4, len_07: 4 } # 电能表日期及星期
+  - { V_oad: 0x83E00201, item_07: 0x03E00201, strat_pos: 0, len_07: 91 } # 电表用电安全日数据
+  - { V_oad: 0x83E00401, item_07: 0x03E00401, strat_pos: 0, len_07: 19 } # 电表日电量统计数据

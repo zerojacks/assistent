@@ -767,11 +767,17 @@ class PraseFrameData():
             else:
                 for data_subitem_elem in all_items:
                     subitem_name = data_subitem_elem.find('name').text
-                    sub_length_content = data_subitem_elem.find('length').text
-                    if sub_length_content == "unknown":
-                        subitem_length = caculate_unknown_length(data_subitem_elem, data, length_maap, protocol)
+                    sub_length_content = data_subitem_elem.find('length')
+                    if sub_length_content is None:
+                        sub_item_ele = data_subitem_elem.find('item')
+                        if sub_item_ele is not None:
+                            subitem_length = frame_fun.caculate_item_box_length(data_subitem_elem, protocol) 
                     else:
-                        subitem_length = int(sub_length_content)
+                        sub_length_content = sub_length_content.text
+                        if sub_length_content == "unknown":
+                            subitem_length = caculate_unknown_length(data_subitem_elem, data, length_maap, protocol)
+                        else:
+                            subitem_length = int(sub_length_content)
                     length += subitem_length
                     length_maap[subitem_name] = [length, subitem_length, data_subitem_elem]
             return length

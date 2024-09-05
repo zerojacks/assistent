@@ -347,6 +347,9 @@ class BaseSendRecive(QWidget):
                 bkg = QColor("blue")
             dir_name = custom
 
+        if self.sendandreceive.verticalScrollBar().value() > self.sendandreceive.viewport().height() * 3:
+            self.sendandreceive.clear()
+
         last_position = self.sendandreceive.verticalScrollBar().value() + self.sendandreceive.viewport().height()
         current_time = datetime.datetime.now()
         current_time_str = current_time.strftime("%Y-%m-%d %H:%M:%S:%f")[:-3]
@@ -357,7 +360,7 @@ class BaseSendRecive(QWidget):
         cursor.movePosition(QTextCursor.End)
         cursor.setCharFormat(sent_message_format)
 
-        if not self.sendandreceive.toPlainText().endswith('\n'):
+        if not self.sendandreceive.toPlainText().endswith('\n') and self.sendandreceive.toPlainText() != '':
             cursor.insertText('\n')
 
         cursor.insertText(f'[{current_time_str}]' + f'[{self.title}]' + f' {dir_name} ' + message)

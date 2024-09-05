@@ -221550,7 +221550,7 @@
 	
 	<dataItem id="03E00201" protocol="DLT/645-2007" region="南网">
 		<name>(上1日)用电安全统计数据</name>
-		<length>108</length>
+		<length>91</length>
 		<splitByLength>
 			<name>长度</name>
 			<length>1</length>
@@ -221629,23 +221629,11 @@
 			<length>4</length>
 			<unit>kW</unit>
 			<decimal>4</decimal>
-		</splitByLength>
-		<splitByLength>
-			<name>发生告警类型</name>
-			<length>1</length>
-		</splitByLength>
-		<splitByLength>
-			<name>预留告警发生时间</name>
-			<length>12</length>
-		</splitByLength>
-		<splitByLength>
-			<name>预留告警发生特征值</name>
-			<length>4</length>
 		</splitByLength>
 	</dataItem>
 	<dataItem id="03E00202" protocol="DLT/645-2007" region="南网">
 		<name>(上2日)用电安全统计数据</name>
-		<length>108</length>
+		<length>91</length>
 		<splitByLength>
 			<name>长度</name>
 			<length>1</length>
@@ -221724,23 +221712,11 @@
 			<length>4</length>
 			<unit>kW</unit>
 			<decimal>4</decimal>
-		</splitByLength>
-		<splitByLength>
-			<name>发生告警类型</name>
-			<length>1</length>
-		</splitByLength>
-		<splitByLength>
-			<name>预留告警发生时间</name>
-			<length>12</length>
-		</splitByLength>
-		<splitByLength>
-			<name>预留告警发生特征值</name>
-			<length>4</length>
 		</splitByLength>
 	</dataItem>
 	<dataItem id="03E00203" protocol="DLT/645-2007" region="南网">
 		<name>(上3日)用电安全统计数据</name>
-		<length>108</length>
+		<length>91</length>
 		<splitByLength>
 			<name>长度</name>
 			<length>1</length>
@@ -221819,23 +221795,11 @@
 			<length>4</length>
 			<unit>kW</unit>
 			<decimal>4</decimal>
-		</splitByLength>
-		<splitByLength>
-			<name>发生告警类型</name>
-			<length>1</length>
-		</splitByLength>
-		<splitByLength>
-			<name>预留告警发生时间</name>
-			<length>12</length>
-		</splitByLength>
-		<splitByLength>
-			<name>预留告警发生特征值</name>
-			<length>4</length>
 		</splitByLength>
 	</dataItem>
 	<dataItem id="03E00204" protocol="DLT/645-2007" region="南网">
 		<name>(上4日)用电安全统计数据</name>
-		<length>108</length>
+		<length>91</length>
 		<splitByLength>
 			<name>长度</name>
 			<length>1</length>
@@ -221915,20 +221879,347 @@
 			<unit>kW</unit>
 			<decimal>4</decimal>
 		</splitByLength>
+	</dataItem>
+	<dataItem id="03E00401" protocol="DLT/645-2007" region="南网">
+		<name>(上1日)电碳计量统计数据</name>
+		<length>19</length>
 		<splitByLength>
-			<name>发生告警类型</name>
+			<name>长度</name>
 			<length>1</length>
+			<type>BIN</type>
 		</splitByLength>
 		<splitByLength>
-			<name>预留告警发生时间</name>
-			<length>12</length>
+			<name>上1次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
 		</splitByLength>
 		<splitByLength>
-			<name>预留告警发生特征值</name>
-			<length>4</length>
+			<name>上1日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上1日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上1日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
 		</splitByLength>
 	</dataItem>
-
+	<dataItem id="03E00402" protocol="DLT/645-2007" region="南网">
+		<name>(上2日)电碳计量统计数据</name>
+		<length>19</length>
+		<splitByLength>
+			<name>长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上2次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>上2日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上2日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上2日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
+	<dataItem id="03E00403" protocol="DLT/645-2007" region="南网">
+		<name>(上3日)电碳计量统计数据</name>
+		<length>19</length>
+		<splitByLength>
+			<name>长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上3次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>上3日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上3日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上3日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
+	<dataItem id="03E00404" protocol="DLT/645-2007" region="南网">
+		<name>(上4日)电碳计量统计数据</name>
+		<length>19</length>
+		<splitByLength>
+			<name>长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上4次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>上4日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上4日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上4日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
+	<dataItem id="03E00405" protocol="DLT/645-2007" region="南网">
+		<name>(上5日)电碳计量统计数据</name>
+		<length>19</length>
+		<splitByLength>
+			<name>长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上5次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>上5日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上5日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上5日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
+	<dataItem id="03E00406" protocol="DLT/645-2007" region="南网">
+		<name>(上6日)电碳计量统计数据</name>
+		<length>19</length>
+		<splitByLength>
+			<name>长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上6次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>上6日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上6日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上6日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
+	<dataItem id="03E00407" protocol="DLT/645-2007" region="南网">
+		<name>(上7日)电碳计量统计数据</name>
+		<length>19</length>
+		<splitByLength>
+			<name>长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上7次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>上7日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上7日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上7日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
+	<dataItem id="03E00408" protocol="DLT/645-2007" region="南网">
+		<name>(上8日)电碳计量统计数据</name>
+		<length>19</length>
+		<splitByLength>
+			<name>长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上8次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>上8日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上8日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上8日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
+	<dataItem id="03E00409" protocol="DLT/645-2007" region="南网">
+		<name>(上9日)电碳计量统计数据</name>
+		<length>19</length>
+		<splitByLength>
+			<name>长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上9次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>上9日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上9日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上9日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
+	<dataItem id="03E0040A" protocol="DLT/645-2007" region="南网">
+		<name>(上10日)电碳计量统计数据</name>
+		<length>19</length>
+		<splitByLength>
+			<name>长度</name>
+			<length>1</length>
+			<type>BIN</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上10次日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>上10日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>上10日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>上10日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
 	<dataItem id="05E00001" protocol="DLT/645-2007" region="南网">
 		<name>用户负荷识别数据</name>
 		<length>48</length>
@@ -221946,7 +222237,13 @@
 		<splitByLength>
 			<name>电器类型1编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型1组合有功电能</name>
@@ -221963,7 +222260,13 @@
 		<splitByLength>
 			<name>电器类型2编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型2组合有功电能</name>
@@ -221980,7 +222283,13 @@
 		<splitByLength>
 			<name>电器类型3编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型3组合有功电能</name>
@@ -221997,7 +222306,13 @@
 		<splitByLength>
 			<name>电器类型4编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型4组合有功电能</name>
@@ -222014,7 +222329,13 @@
 		<splitByLength>
 			<name>电器类型5编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型5组合有功电能</name>
@@ -222031,7 +222352,13 @@
 		<splitByLength>
 			<name>电器类型6编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型6组合有功电能</name>

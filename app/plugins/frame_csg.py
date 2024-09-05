@@ -767,11 +767,19 @@ def recaculate_sub_length(data_item_elem, data_segment):
         sub_length = int(sub_length_cont)
         if data_item_elem.get("protocol") and data_item_elem.get("region"):
             #块数据
-            if data_item_elem.find('.//dataItem[@id="费率数"]'):
-                data_item_count = len(data_item_elem.findall("dataItem"))
-                length = (sub_length - 1)/ (data_item_count - 1)
-                sub_length = (data_segment[0] + 1) * length + 1
-                sub_length = int(sub_length)
+            if data_item_elem.find('.//dataItem[@id="费率数"]') or data_item_elem.find('.//dataItem[@attr="组数"]'):
+                if data_segment[0] == 0:
+                    sub_length = 1
+                else:
+                    data_item_count = len(data_item_elem.findall("dataItem"))
+                    length = (sub_length - 1)/ (data_item_count - 1)
+                    if data_item_elem.find('.//dataItem[@id="费率数"]'):
+                        sub_length = (data_segment[0] + 1) * length + 1
+                    else:
+                        sub_length = data_segment[0] * length + 1
+
+                    sub_length = int(sub_length)  
+
     return sub_length,data_segment[:sub_length]
 
 def try_get_item_and_point(item, DA):
@@ -1599,6 +1607,10 @@ def Analysic_csg_read_task_frame(frame, dir, prm,result_list,start_pos):
             if dir == 1:
                 if num >= item_count * pncount:
                     break
+                if length - pos == 6:
+                    if guest_next_data_is_cur_item_data(data_item_elem, data_segment[pos:], data_time) == False:
+                        break
+
         except Exception as e:
             err = CustomError('解析数据失败！')
             break
@@ -1994,3 +2006,4 @@ def Analysic_csg_topo_frame(frame, dir, prm,result_list,start_pos):
     frame_fun.add_data(result_list, "信息体", frame_fun.get_data_str_with_space(frame[16:-2]), "", [index, start_pos + len(frame)-2],sub_result)
     if err:
         raise err
+    

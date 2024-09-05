@@ -53160,6 +53160,114 @@
 			<decimal>4</decimal>
 		</splitByLength>
 	</dataItem>
+	<dataItem id="E1008080" protocol="csg13" region="南网">
+		<name>上1日电碳计量统计数据</name>
+		<length>18</length>
+		<splitByLength>
+			<name>日冻结时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>日冻结电碳量</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>Kg/CO2-eq</unit>
+		</splitByLength>
+		<splitByLength>
+			<name>日冻结电碳因子</name>
+			<length>3</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>日冻结正向有功电能</name>
+			<length>5</length>
+			<decimal>4</decimal>
+			<type>BCD</type>
+			<unit>kwh</unit>
+		</splitByLength>
+	</dataItem>
+	<dataItem id="E1008081" protocol="csg13" region="南网">
+		<name>电表日用电安全数据</name>
+		<length>90</length>
+		<splitByLength>
+			<name>存储时间</name>
+			<length>5</length>
+			<time>mmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>发生告警类型</name>
+			<length>1</length>
+		</splitByLength>
+		<splitByLength>
+			<name>电瓶车充电发生时间</name>
+			<length>12</length>
+		</splitByLength>
+		<splitByLength>
+			<name>电瓶车充电发生特征值</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</splitByLength>
+		<splitByLength>
+			<name>发生告警类型</name>
+			<length>1</length>
+		</splitByLength>
+		<splitByLength>
+			<name>剩余电流发生时间</name>
+			<length>12</length>
+		</splitByLength>
+		<splitByLength>
+			<name>剩余电流发生特征值</name>
+			<length>4</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</splitByLength>
+		<splitByLength>
+			<name>发生告警类型</name>
+			<length>1</length>
+		</splitByLength>
+		<splitByLength>
+			<name>端子超温发生时间</name>
+			<length>12</length>
+		</splitByLength>
+		<splitByLength>
+			<name>端子超温发生特征值</name>
+			<length>4</length>
+			<unit>℃</unit>
+			<decimal>1</decimal>
+		</splitByLength>
+		<splitByLength>
+			<name>发生告警类型</name>
+			<length>1</length>
+		</splitByLength>
+		<splitByLength>
+			<name>电弧监测告警发生时间</name>
+			<length>12</length>
+		</splitByLength>
+		<splitByLength>
+			<name>电弧监测告警发生特征值</name>
+			<length>4</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</splitByLength>
+		<splitByLength>
+			<name>发生告警类型</name>
+			<length>1</length>
+		</splitByLength>
+		<splitByLength>
+			<name>过载发生时间</name>
+			<length>12</length>
+		</splitByLength>
+		<splitByLength>
+			<name>过载告警发生特征值</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</splitByLength>
+	</dataItem>
 	<dataItem id="E100C010" protocol="csg13" region="南网">
 		<name>(冻结)月电压合格率统计数据</name>
 		<length>27</length>
@@ -53930,6 +54038,12 @@
 		<name>电弧越限告警</name>
 		<length>unknown</length>
 		<type>ARD1</type>
+		<single>YES</single>
+	</dataItem>
+	<dataItem id="E20000F5" protocol="csg13" region="南网">
+		<name>扩展用电安全告警信息</name>
+		<length>unknown</length>
+		<type>ARD80</type>
 		<single>YES</single>
 	</dataItem>
 	<dataItem id="E2000029" protocol="csg13" region="南网">
@@ -54826,6 +54940,47 @@
 			<value key="other">未知</value>
 		</splitByLength>
 	</template>
+	<template id="ARD80" protocol="csg13" region="南网">
+		<splitByLength>
+			<name>告警状态</name>
+			<length>1</length>
+			<value key="00">恢复</value>
+			<value key="01">发生</value>
+		</splitByLength>
+		<splitByLength>
+			<name>告警发生时间</name>
+			<length>6</length>
+			<time>ssmmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>电表失效异常原因</name>
+			<length>1</length>
+			<value key="01">A相过载</value>
+			<value key="02">电弧告警</value>
+			<value key="03">端子温度过热</value>
+			<value key="04">漏电</value>
+			<value key="05">恶性负载</value>
+			<value key="06">负荷开关误动作或拒动</value>
+			<value key="07">主动拉闸</value>
+			<value key="08">失压</value>
+			<value key="09">电瓶车充电告警</value>
+			<value key="10">烟雾状态传感异常</value>
+			<value key="11">门状态传感异常</value>
+			<value key="other">未知</value>
+		</splitByLength>
+		<splitByLength>
+			<name>发生时数据</name>
+			<item>00010000</item>
+			<item>00020000</item>
+			<item>00030000</item>
+			<item>00040000</item>
+			<item>0201FF00</item>
+			<item>0202FF00</item>
+			<item>0203FF00</item>
+			<item>0204FF00</item>
+			<item>0206FF00</item>
+		</splitByLength>
+	</template>
 	<template id="ARD84" protocol="csg13" region="南网">
 		<splitByLength>
 			<splitByLength>
@@ -55527,7 +55682,13 @@
 		<splitByLength>
 			<name>电器类型1编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型1组合有功电能</name>
@@ -55544,7 +55705,13 @@
 		<splitByLength>
 			<name>电器类型2编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型2组合有功电能</name>
@@ -55561,7 +55728,13 @@
 		<splitByLength>
 			<name>电器类型3编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型3组合有功电能</name>
@@ -55578,7 +55751,13 @@
 		<splitByLength>
 			<name>电器类型4编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型4组合有功电能</name>
@@ -55595,7 +55774,13 @@
 		<splitByLength>
 			<name>电器类型5编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型5组合有功电能</name>
@@ -55612,7 +55797,13 @@
 		<splitByLength>
 			<name>电器类型6编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型6组合有功电能</name>
@@ -55633,7 +55824,13 @@
 		<splitByLength>
 			<name>电器类型1编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型1组合有功电能</name>
@@ -55650,7 +55847,13 @@
 		<splitByLength>
 			<name>电器类型2编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型2组合有功电能</name>
@@ -55667,7 +55870,13 @@
 		<splitByLength>
 			<name>电器类型3编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型3组合有功电能</name>
@@ -55684,7 +55893,13 @@
 		<splitByLength>
 			<name>电器类型4编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型4组合有功电能</name>
@@ -55701,7 +55916,13 @@
 		<splitByLength>
 			<name>电器类型5编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型5组合有功电能</name>
@@ -55718,7 +55939,13 @@
 		<splitByLength>
 			<name>电器类型6编号</name>
 			<length>1</length>
-			<type>BIN</type>
+			<type>BCD</type>
+			<value key="81">空调</value>
+			<value key="82">电热</value>
+			<value key="84">微功率类电器</value>
+			<value key="83">烹饪电器</value>
+			<value key="32">洗衣机</value>
+			<value key="33">电冰箱</value>
 		</splitByLength>
 		<splitByLength>
 			<name>电器类型6组合有功电能</name>
@@ -59065,5 +59292,4138 @@
 			<decimal>1</decimal>
 			<unit>%</unit>
 		</splitByLength>
+	</dataItem>
+	<dataItem id="0221FF00" protocol="csg13" region="南网">
+		<name>(当前)基站直流侧电压数据块</name>
+		<length>127</length>
+		<dataItem id="路数" attr="组数">
+			<name>路数</name>
+			<length>1</length>
+		</dataItem>
+		<dataItem id="02210100">
+			<name>基站直流侧第1路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210200">
+			<name>基站直流侧第2路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210300">
+			<name>基站直流侧第3路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210400">
+			<name>基站直流侧第4路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210500">
+			<name>基站直流侧第5路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210600">
+			<name>基站直流侧第6路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210700">
+			<name>基站直流侧第7路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210800">
+			<name>基站直流侧第8路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210900">
+			<name>基站直流侧第9路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210A00">
+			<name>基站直流侧第10路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210B00">
+			<name>基站直流侧第11路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210C00">
+			<name>基站直流侧第12路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210D00">
+			<name>基站直流侧第13路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210E00">
+			<name>基站直流侧第14路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02210F00">
+			<name>基站直流侧第15路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211000">
+			<name>基站直流侧第16路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211100">
+			<name>基站直流侧第17路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211200">
+			<name>基站直流侧第18路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211300">
+			<name>基站直流侧第19路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211400">
+			<name>基站直流侧第20路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211500">
+			<name>基站直流侧第21路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211600">
+			<name>基站直流侧第22路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211700">
+			<name>基站直流侧第23路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211800">
+			<name>基站直流侧第24路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211900">
+			<name>基站直流侧第25路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211A00">
+			<name>基站直流侧第26路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211B00">
+			<name>基站直流侧第27路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211C00">
+			<name>基站直流侧第28路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211D00">
+			<name>基站直流侧第29路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211E00">
+			<name>基站直流侧第30路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02211F00">
+			<name>基站直流侧第31路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212000">
+			<name>基站直流侧第32路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212100">
+			<name>基站直流侧第33路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212200">
+			<name>基站直流侧第34路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212300">
+			<name>基站直流侧第35路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212400">
+			<name>基站直流侧第36路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212500">
+			<name>基站直流侧第37路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212600">
+			<name>基站直流侧第38路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212700">
+			<name>基站直流侧第39路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212800">
+			<name>基站直流侧第40路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212900">
+			<name>基站直流侧第41路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212A00">
+			<name>基站直流侧第42路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212B00">
+			<name>基站直流侧第43路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212C00">
+			<name>基站直流侧第44路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212D00">
+			<name>基站直流侧第45路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212E00">
+			<name>基站直流侧第46路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02212F00">
+			<name>基站直流侧第47路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213000">
+			<name>基站直流侧第48路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213100">
+			<name>基站直流侧第49路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213200">
+			<name>基站直流侧第50路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213300">
+			<name>基站直流侧第51路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213400">
+			<name>基站直流侧第52路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213500">
+			<name>基站直流侧第53路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213600">
+			<name>基站直流侧第54路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213700">
+			<name>基站直流侧第55路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213800">
+			<name>基站直流侧第56路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213900">
+			<name>基站直流侧第57路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213A00">
+			<name>基站直流侧第58路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213B00">
+			<name>基站直流侧第59路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213C00">
+			<name>基站直流侧第60路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213D00">
+			<name>基站直流侧第61路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213E00">
+			<name>基站直流侧第62路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="02213F00">
+			<name>基站直流侧第63路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+	</dataItem>
+	<dataItem id="0222FF00" protocol="csg13" region="南网">
+		<name>(当前)基站直流侧电流数据块</name>
+		<length>190</length>
+		<dataItem id="路数" attr="组数">
+			<name>路数</name>
+			<length>1</length>
+		</dataItem>
+		<dataItem id="02220100">
+			<name>基站直流侧第1路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220200">
+			<name>基站直流侧第2路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220300">
+			<name>基站直流侧第3路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220400">
+			<name>基站直流侧第4路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220500">
+			<name>基站直流侧第5路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220600">
+			<name>基站直流侧第6路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220700">
+			<name>基站直流侧第7路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220800">
+			<name>基站直流侧第8路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220900">
+			<name>基站直流侧第9路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220A00">
+			<name>基站直流侧第10路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220B00">
+			<name>基站直流侧第11路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220C00">
+			<name>基站直流侧第12路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220D00">
+			<name>基站直流侧第13路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220E00">
+			<name>基站直流侧第14路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02220F00">
+			<name>基站直流侧第15路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221000">
+			<name>基站直流侧第16路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221100">
+			<name>基站直流侧第17路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221200">
+			<name>基站直流侧第18路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221300">
+			<name>基站直流侧第19路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221400">
+			<name>基站直流侧第20路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221500">
+			<name>基站直流侧第21路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221600">
+			<name>基站直流侧第22路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221700">
+			<name>基站直流侧第23路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221800">
+			<name>基站直流侧第24路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221900">
+			<name>基站直流侧第25路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221A00">
+			<name>基站直流侧第26路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221B00">
+			<name>基站直流侧第27路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221C00">
+			<name>基站直流侧第28路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221D00">
+			<name>基站直流侧第29路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221E00">
+			<name>基站直流侧第30路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02221F00">
+			<name>基站直流侧第31路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222000">
+			<name>基站直流侧第32路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222100">
+			<name>基站直流侧第33路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222200">
+			<name>基站直流侧第34路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222300">
+			<name>基站直流侧第35路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222400">
+			<name>基站直流侧第36路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222500">
+			<name>基站直流侧第37路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222600">
+			<name>基站直流侧第38路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222700">
+			<name>基站直流侧第39路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222800">
+			<name>基站直流侧第40路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222900">
+			<name>基站直流侧第41路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222A00">
+			<name>基站直流侧第42路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222B00">
+			<name>基站直流侧第43路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222C00">
+			<name>基站直流侧第44路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222D00">
+			<name>基站直流侧第45路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222E00">
+			<name>基站直流侧第46路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02222F00">
+			<name>基站直流侧第47路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223000">
+			<name>基站直流侧第48路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223100">
+			<name>基站直流侧第49路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223200">
+			<name>基站直流侧第50路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223300">
+			<name>基站直流侧第51路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223400">
+			<name>基站直流侧第52路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223500">
+			<name>基站直流侧第53路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223600">
+			<name>基站直流侧第54路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223700">
+			<name>基站直流侧第55路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223800">
+			<name>基站直流侧第56路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223900">
+			<name>基站直流侧第57路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223A00">
+			<name>基站直流侧第58路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223B00">
+			<name>基站直流侧第59路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223C00">
+			<name>基站直流侧第60路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223D00">
+			<name>基站直流侧第61路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223E00">
+			<name>基站直流侧第62路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="02223F00">
+			<name>基站直流侧第63路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+	</dataItem>
+	<dataItem id="0223FF00" protocol="csg13" region="南网">
+		<name>(当前)基站直流侧功率数据块</name>
+		<length>193</length>
+		<dataItem id="路数" attr="组数">
+			<name>路数</name>
+			<length>1</length>
+		</dataItem>
+		<dataItem id="02230000">
+			<name>基站直流侧总功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230100">
+			<name>基站直流侧第1路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230200">
+			<name>基站直流侧第2路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230300">
+			<name>基站直流侧第3路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230400">
+			<name>基站直流侧第4路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230500">
+			<name>基站直流侧第5路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230600">
+			<name>基站直流侧第6路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230700">
+			<name>基站直流侧第7路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230800">
+			<name>基站直流侧第8路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230900">
+			<name>基站直流侧第9路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230A00">
+			<name>基站直流侧第10路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230B00">
+			<name>基站直流侧第11路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230C00">
+			<name>基站直流侧第12路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230D00">
+			<name>基站直流侧第13路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230E00">
+			<name>基站直流侧第14路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02230F00">
+			<name>基站直流侧第15路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231000">
+			<name>基站直流侧第16路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231100">
+			<name>基站直流侧第17路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231200">
+			<name>基站直流侧第18路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231300">
+			<name>基站直流侧第19路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231400">
+			<name>基站直流侧第20路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231500">
+			<name>基站直流侧第21路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231600">
+			<name>基站直流侧第22路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231700">
+			<name>基站直流侧第23路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231800">
+			<name>基站直流侧第24路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231900">
+			<name>基站直流侧第25路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231A00">
+			<name>基站直流侧第26路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231B00">
+			<name>基站直流侧第27路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231C00">
+			<name>基站直流侧第28路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231D00">
+			<name>基站直流侧第29路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231E00">
+			<name>基站直流侧第30路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02231F00">
+			<name>基站直流侧第31路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232000">
+			<name>基站直流侧第32路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232100">
+			<name>基站直流侧第33路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232200">
+			<name>基站直流侧第34路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232300">
+			<name>基站直流侧第35路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232400">
+			<name>基站直流侧第36路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232500">
+			<name>基站直流侧第37路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232600">
+			<name>基站直流侧第38路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232700">
+			<name>基站直流侧第39路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232800">
+			<name>基站直流侧第40路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232900">
+			<name>基站直流侧第41路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232A00">
+			<name>基站直流侧第42路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232B00">
+			<name>基站直流侧第43路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232C00">
+			<name>基站直流侧第44路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232D00">
+			<name>基站直流侧第45路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232E00">
+			<name>基站直流侧第46路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02232F00">
+			<name>基站直流侧第47路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233000">
+			<name>基站直流侧第48路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233100">
+			<name>基站直流侧第49路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233200">
+			<name>基站直流侧第50路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233300">
+			<name>基站直流侧第51路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233400">
+			<name>基站直流侧第52路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233500">
+			<name>基站直流侧第53路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233600">
+			<name>基站直流侧第54路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233700">
+			<name>基站直流侧第55路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233800">
+			<name>基站直流侧第56路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233900">
+			<name>基站直流侧第57路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233A00">
+			<name>基站直流侧第58路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233B00">
+			<name>基站直流侧第59路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233C00">
+			<name>基站直流侧第60路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233D00">
+			<name>基站直流侧第61路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233E00">
+			<name>基站直流侧第62路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="02233F00">
+			<name>基站直流侧第63路功率</name>
+			<length>3</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+	</dataItem>
+	<dataItem id="0801FF00" protocol="csg13" region="南网">
+		<name>(当前)基站直流侧电压数据块</name>
+		<length>127</length>
+		<dataItem id="路数" attr="组数">
+			<name>路数</name>
+			<length>1</length>
+		</dataItem>
+		<dataItem id="08010100">
+			<name>基站直流侧第1路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010200">
+			<name>基站直流侧第2路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010300">
+			<name>基站直流侧第3路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010400">
+			<name>基站直流侧第4路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010500">
+			<name>基站直流侧第5路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010600">
+			<name>基站直流侧第6路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010700">
+			<name>基站直流侧第7路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010800">
+			<name>基站直流侧第8路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010900">
+			<name>基站直流侧第9路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010A00">
+			<name>基站直流侧第10路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010B00">
+			<name>基站直流侧第11路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010C00">
+			<name>基站直流侧第12路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010D00">
+			<name>基站直流侧第13路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010E00">
+			<name>基站直流侧第14路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08010F00">
+			<name>基站直流侧第15路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011000">
+			<name>基站直流侧第16路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011100">
+			<name>基站直流侧第17路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011200">
+			<name>基站直流侧第18路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011300">
+			<name>基站直流侧第19路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011400">
+			<name>基站直流侧第20路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011500">
+			<name>基站直流侧第21路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011600">
+			<name>基站直流侧第22路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011700">
+			<name>基站直流侧第23路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011800">
+			<name>基站直流侧第24路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011900">
+			<name>基站直流侧第25路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011A00">
+			<name>基站直流侧第26路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011B00">
+			<name>基站直流侧第27路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011C00">
+			<name>基站直流侧第28路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011D00">
+			<name>基站直流侧第29路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011E00">
+			<name>基站直流侧第30路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08011F00">
+			<name>基站直流侧第31路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012000">
+			<name>基站直流侧第32路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012100">
+			<name>基站直流侧第33路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012200">
+			<name>基站直流侧第34路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012300">
+			<name>基站直流侧第35路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012400">
+			<name>基站直流侧第36路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012500">
+			<name>基站直流侧第37路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012600">
+			<name>基站直流侧第38路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012700">
+			<name>基站直流侧第39路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012800">
+			<name>基站直流侧第40路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012900">
+			<name>基站直流侧第41路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012A00">
+			<name>基站直流侧第42路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012B00">
+			<name>基站直流侧第43路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012C00">
+			<name>基站直流侧第44路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012D00">
+			<name>基站直流侧第45路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012E00">
+			<name>基站直流侧第46路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08012F00">
+			<name>基站直流侧第47路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013000">
+			<name>基站直流侧第48路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013100">
+			<name>基站直流侧第49路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013200">
+			<name>基站直流侧第50路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013300">
+			<name>基站直流侧第51路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013400">
+			<name>基站直流侧第52路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013500">
+			<name>基站直流侧第53路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013600">
+			<name>基站直流侧第54路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013700">
+			<name>基站直流侧第55路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013800">
+			<name>基站直流侧第56路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013900">
+			<name>基站直流侧第57路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013A00">
+			<name>基站直流侧第58路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013B00">
+			<name>基站直流侧第59路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013C00">
+			<name>基站直流侧第60路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013D00">
+			<name>基站直流侧第61路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013E00">
+			<name>基站直流侧第62路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08013F00">
+			<name>基站直流侧第63路电压</name>
+			<length>2</length>
+			<unit>V</unit>
+			<decimal>1</decimal>
+		</dataItem>
+	</dataItem>
+	<dataItem id="0802FF00" protocol="csg13" region="南网">
+		<name>(当前)充电桩直流侧电流数据块</name>
+		<length>190</length>
+		<dataItem id="路数" attr="组数">
+			<name>路数</name>
+			<length>1</length>
+		</dataItem>
+		<dataItem id="08020100">
+			<name>充电桩直流侧第1路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020200">
+			<name>充电桩直流侧第2路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020300">
+			<name>充电桩直流侧第3路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020400">
+			<name>充电桩直流侧第4路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020500">
+			<name>充电桩直流侧第5路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020600">
+			<name>充电桩直流侧第6路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020700">
+			<name>充电桩直流侧第7路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020800">
+			<name>充电桩直流侧第8路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020900">
+			<name>充电桩直流侧第9路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020A00">
+			<name>充电桩直流侧第10路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020B00">
+			<name>充电桩直流侧第11路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020C00">
+			<name>充电桩直流侧第12路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020D00">
+			<name>充电桩直流侧第13路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020E00">
+			<name>充电桩直流侧第14路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08020F00">
+			<name>充电桩直流侧第15路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021000">
+			<name>充电桩直流侧第16路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021100">
+			<name>充电桩直流侧第17路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021200">
+			<name>充电桩直流侧第18路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021300">
+			<name>充电桩直流侧第19路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021400">
+			<name>充电桩直流侧第20路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021500">
+			<name>充电桩直流侧第21路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021600">
+			<name>充电桩直流侧第22路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021700">
+			<name>充电桩直流侧第23路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021800">
+			<name>充电桩直流侧第24路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021900">
+			<name>充电桩直流侧第25路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021A00">
+			<name>充电桩直流侧第26路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021B00">
+			<name>充电桩直流侧第27路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021C00">
+			<name>充电桩直流侧第28路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021D00">
+			<name>充电桩直流侧第29路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021E00">
+			<name>充电桩直流侧第30路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08021F00">
+			<name>充电桩直流侧第31路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022000">
+			<name>充电桩直流侧第32路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022100">
+			<name>充电桩直流侧第33路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022200">
+			<name>充电桩直流侧第34路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022300">
+			<name>充电桩直流侧第35路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022400">
+			<name>充电桩直流侧第36路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022500">
+			<name>充电桩直流侧第37路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022600">
+			<name>充电桩直流侧第38路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022700">
+			<name>充电桩直流侧第39路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022800">
+			<name>充电桩直流侧第40路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022900">
+			<name>充电桩直流侧第41路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022A00">
+			<name>充电桩直流侧第42路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022B00">
+			<name>充电桩直流侧第43路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022C00">
+			<name>充电桩直流侧第44路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022D00">
+			<name>充电桩直流侧第45路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022E00">
+			<name>充电桩直流侧第46路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08022F00">
+			<name>充电桩直流侧第47路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023000">
+			<name>充电桩直流侧第48路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023100">
+			<name>充电桩直流侧第49路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023200">
+			<name>充电桩直流侧第50路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023300">
+			<name>充电桩直流侧第51路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023400">
+			<name>充电桩直流侧第52路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023500">
+			<name>充电桩直流侧第53路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023600">
+			<name>充电桩直流侧第54路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023700">
+			<name>充电桩直流侧第55路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023800">
+			<name>充电桩直流侧第56路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023900">
+			<name>充电桩直流侧第57路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023A00">
+			<name>充电桩直流侧第58路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023B00">
+			<name>充电桩直流侧第59路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023C00">
+			<name>充电桩直流侧第60路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023D00">
+			<name>充电桩直流侧第61路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023E00">
+			<name>充电桩直流侧第62路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+		<dataItem id="08023F00">
+			<name>充电桩直流侧第63路电流</name>
+			<length>3</length>
+			<unit>A</unit>
+			<decimal>3</decimal>
+		</dataItem>
+	</dataItem>
+	<dataItem id="0803FF00" protocol="csg13" region="南网">
+		<name>(当前)基站直流侧功率数据块</name>
+		<length>253</length>
+		<dataItem id="费率数">
+			<name>路数</name>
+			<length>1</length>
+		</dataItem>
+		<dataItem id="08030000">
+			<name>基站直流侧总功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030100">
+			<name>基站直流侧第1路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030200">
+			<name>基站直流侧第2路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030300">
+			<name>基站直流侧第3路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030400">
+			<name>基站直流侧第4路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030500">
+			<name>基站直流侧第5路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030600">
+			<name>基站直流侧第6路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030700">
+			<name>基站直流侧第7路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030800">
+			<name>基站直流侧第8路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030900">
+			<name>基站直流侧第9路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030A00">
+			<name>基站直流侧第10路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030B00">
+			<name>基站直流侧第11路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030C00">
+			<name>基站直流侧第12路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030D00">
+			<name>基站直流侧第13路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030E00">
+			<name>基站直流侧第14路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08030F00">
+			<name>基站直流侧第15路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031000">
+			<name>基站直流侧第16路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031100">
+			<name>基站直流侧第17路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031200">
+			<name>基站直流侧第18路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031300">
+			<name>基站直流侧第19路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031400">
+			<name>基站直流侧第20路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031500">
+			<name>基站直流侧第21路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031600">
+			<name>基站直流侧第22路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031700">
+			<name>基站直流侧第23路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031800">
+			<name>基站直流侧第24路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031900">
+			<name>基站直流侧第25路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031A00">
+			<name>基站直流侧第26路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031B00">
+			<name>基站直流侧第27路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031C00">
+			<name>基站直流侧第28路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031D00">
+			<name>基站直流侧第29路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031E00">
+			<name>基站直流侧第30路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08031F00">
+			<name>基站直流侧第31路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032000">
+			<name>基站直流侧第32路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032100">
+			<name>基站直流侧第33路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032200">
+			<name>基站直流侧第34路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032300">
+			<name>基站直流侧第35路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032400">
+			<name>基站直流侧第36路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032500">
+			<name>基站直流侧第37路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032600">
+			<name>基站直流侧第38路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032700">
+			<name>基站直流侧第39路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032800">
+			<name>基站直流侧第40路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032900">
+			<name>基站直流侧第41路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032A00">
+			<name>基站直流侧第42路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032B00">
+			<name>基站直流侧第43路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032C00">
+			<name>基站直流侧第44路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032D00">
+			<name>基站直流侧第45路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032E00">
+			<name>基站直流侧第46路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08032F00">
+			<name>基站直流侧第47路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033000">
+			<name>基站直流侧第48路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033100">
+			<name>基站直流侧第49路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033200">
+			<name>基站直流侧第50路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033300">
+			<name>基站直流侧第51路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033400">
+			<name>基站直流侧第52路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033500">
+			<name>基站直流侧第53路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033600">
+			<name>基站直流侧第54路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033700">
+			<name>基站直流侧第55路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033800">
+			<name>基站直流侧第56路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033900">
+			<name>基站直流侧第57路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033A00">
+			<name>基站直流侧第58路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033B00">
+			<name>基站直流侧第59路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033C00">
+			<name>基站直流侧第60路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033D00">
+			<name>基站直流侧第61路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033E00">
+			<name>基站直流侧第62路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+		<dataItem id="08033F00">
+			<name>基站直流侧第63路功率</name>
+			<length>4</length>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</dataItem>
+	</dataItem>
+	<dataItem id="0804FF00" protocol="csg13" region="南网">
+		<name>(当前)基站直流侧电量数据块</name>
+		<length>316</length>
+		<dataItem id="路数" attr="组数">
+			<name>路数</name>
+			<length>1</length>
+		</dataItem>
+		<dataItem id="08040000">
+			<name>基站直流侧总电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040100">
+			<name>基站直流侧第1路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040200">
+			<name>基站直流侧第2路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040300">
+			<name>基站直流侧第3路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040400">
+			<name>基站直流侧第4路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040500">
+			<name>基站直流侧第5路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040600">
+			<name>基站直流侧第6路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040700">
+			<name>基站直流侧第7路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040800">
+			<name>基站直流侧第8路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040900">
+			<name>基站直流侧第9路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040A00">
+			<name>基站直流侧第10路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040B00">
+			<name>基站直流侧第11路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040C00">
+			<name>基站直流侧第12路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040D00">
+			<name>基站直流侧第13路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040E00">
+			<name>基站直流侧第14路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08040F00">
+			<name>基站直流侧第15路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041000">
+			<name>基站直流侧第16路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041100">
+			<name>基站直流侧第17路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041200">
+			<name>基站直流侧第18路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041300">
+			<name>基站直流侧第19路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041400">
+			<name>基站直流侧第20路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041500">
+			<name>基站直流侧第21路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041600">
+			<name>基站直流侧第22路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041700">
+			<name>基站直流侧第23路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041800">
+			<name>基站直流侧第24路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041900">
+			<name>基站直流侧第25路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041A00">
+			<name>基站直流侧第26路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041B00">
+			<name>基站直流侧第27路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041C00">
+			<name>基站直流侧第28路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041D00">
+			<name>基站直流侧第29路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041E00">
+			<name>基站直流侧第30路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08041F00">
+			<name>基站直流侧第31路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042000">
+			<name>基站直流侧第32路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042100">
+			<name>基站直流侧第33路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042200">
+			<name>基站直流侧第34路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042300">
+			<name>基站直流侧第35路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042400">
+			<name>基站直流侧第36路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042500">
+			<name>基站直流侧第37路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042600">
+			<name>基站直流侧第38路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042700">
+			<name>基站直流侧第39路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042800">
+			<name>基站直流侧第40路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042900">
+			<name>基站直流侧第41路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042A00">
+			<name>基站直流侧第42路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042B00">
+			<name>基站直流侧第43路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042C00">
+			<name>基站直流侧第44路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042D00">
+			<name>基站直流侧第45路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042E00">
+			<name>基站直流侧第46路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08042F00">
+			<name>基站直流侧第47路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043000">
+			<name>基站直流侧第48路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043100">
+			<name>基站直流侧第49路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043200">
+			<name>基站直流侧第50路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043300">
+			<name>基站直流侧第51路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043400">
+			<name>基站直流侧第52路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043500">
+			<name>基站直流侧第53路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043600">
+			<name>基站直流侧第54路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043700">
+			<name>基站直流侧第55路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043800">
+			<name>基站直流侧第56路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043900">
+			<name>基站直流侧第57路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043A00">
+			<name>基站直流侧第58路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043B00">
+			<name>基站直流侧第59路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043C00">
+			<name>基站直流侧第60路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043D00">
+			<name>基站直流侧第61路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043E00">
+			<name>基站直流侧第62路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+		<dataItem id="08043F00">
+			<name>基站直流侧第63路电量</name>
+			<length>5</length>
+			<unit>kW</unit>
+			<decimal>1</decimal>
+		</dataItem>
+	</dataItem>
+	<dataItem id="080006FF" protocol="csg13" region="南网">
+		<name>充电桩所有枪充电状态</name>
+		<length>64</length>
+		<dataItem id="路数" attr="组数">
+			<name>路数</name>
+			<length>1</length>
+		</dataItem>
+		<dataItem id="08000601">
+			<name>充电桩1枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000602">
+			<name>充电桩2枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000603">
+			<name>充电桩3枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000604">
+			<name>充电桩4枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000605">
+			<name>充电桩5枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000606">
+			<name>充电桩6枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000607">
+			<name>充电桩7枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000608">
+			<name>充电桩8枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000609">
+			<name>充电桩9枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800060A">
+			<name>充电桩10枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800060B">
+			<name>充电桩11枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800060C">
+			<name>充电桩12枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800060D">
+			<name>充电桩13枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800060E">
+			<name>充电桩14枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800060F">
+			<name>充电桩15枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000610">
+			<name>充电桩16枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000611">
+			<name>充电桩17枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000612">
+			<name>充电桩18枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000613">
+			<name>充电桩19枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000614">
+			<name>充电桩20枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000615">
+			<name>充电桩21枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000616">
+			<name>充电桩22枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000617">
+			<name>充电桩23枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000618">
+			<name>充电桩24枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000619">
+			<name>充电桩25枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800061A">
+			<name>充电桩26枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800061B">
+			<name>充电桩27枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800061C">
+			<name>充电桩28枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800061D">
+			<name>充电桩29枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800061E">
+			<name>充电桩30枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800061F">
+			<name>充电桩31枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000620">
+			<name>充电桩32枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000621">
+			<name>充电桩33枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000622">
+			<name>充电桩34枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000623">
+			<name>充电桩35枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000624">
+			<name>充电桩36枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000625">
+			<name>充电桩37枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000626">
+			<name>充电桩38枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000627">
+			<name>充电桩39枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000628">
+			<name>充电桩40枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000629">
+			<name>充电桩41枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800062A">
+			<name>充电桩42枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800062B">
+			<name>充电桩43枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800062C">
+			<name>充电桩44枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800062D">
+			<name>充电桩45枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800062E">
+			<name>充电桩46枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800062F">
+			<name>充电桩47枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000630">
+			<name>充电桩48枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000631">
+			<name>充电桩49枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000632">
+			<name>充电桩50枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000633">
+			<name>充电桩51枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000634">
+			<name>充电桩52枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000635">
+			<name>充电桩53枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000636">
+			<name>充电桩54枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000637">
+			<name>充电桩55枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000638">
+			<name>充电桩56枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000639">
+			<name>充电桩57枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800063A">
+			<name>充电桩58枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800063B">
+			<name>充电桩59枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800063C">
+			<name>充电桩60枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800063D">
+			<name>充电桩61枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800063E">
+			<name>充电桩62枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800063F">
+			<name>充电桩63枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲中，未插枪</value> 
+			<value key="01">空闲中，已插枪</value> 
+			<value key="02">充电中</value> 
+			<value key="03">充电完成</value> 
+			<value key="other">未知</value>
+		</dataItem>
+	</dataItem>
+	<dataItem id="080007FF" protocol="csg13" region="南网">
+		<name>充电桩所有枪充电阶段</name>
+		<length>64</length>
+		<dataItem id="路数" attr="组数">
+			<name>路数</name>
+			<length>1</length> 
+		</dataItem>
+		<dataItem id="08000701">
+			<name>充电桩1枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000702">
+			<name>充电桩2枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000703">
+			<name>充电桩3枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000704">
+			<name>充电桩4枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000705">
+			<name>充电桩5枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000706">
+			<name>充电桩6枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000707">
+			<name>充电桩7枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000708">
+			<name>充电桩8枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000709">
+			<name>充电桩9枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800070A">
+			<name>充电桩10枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800070B">
+			<name>充电桩11枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800070C">
+			<name>充电桩12枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800070D">
+			<name>充电桩13枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800070E">
+			<name>充电桩14枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800070F">
+			<name>充电桩15枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000710">
+			<name>充电桩16枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000711">
+			<name>充电桩17枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000712">
+			<name>充电桩18枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000713">
+			<name>充电桩19枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000714">
+			<name>充电桩20枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000715">
+			<name>充电桩21枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000716">
+			<name>充电桩22枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000717">
+			<name>充电桩23枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000718">
+			<name>充电桩24枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000719">
+			<name>充电桩25枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800071A">
+			<name>充电桩26枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800071B">
+			<name>充电桩27枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800071C">
+			<name>充电桩28枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800071D">
+			<name>充电桩29枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800071E">
+			<name>充电桩30枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800071F">
+			<name>充电桩31枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000720">
+			<name>充电桩32枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000721">
+			<name>充电桩33枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000722">
+			<name>充电桩34枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000723">
+			<name>充电桩35枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000724">
+			<name>充电桩36枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000725">
+			<name>充电桩37枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000726">
+			<name>充电桩38枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000727">
+			<name>充电桩39枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000728">
+			<name>充电桩40枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000729">
+			<name>充电桩41枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800072A">
+			<name>充电桩42枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800072B">
+			<name>充电桩43枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800072C">
+			<name>充电桩44枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800072D">
+			<name>充电桩45枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800072E">
+			<name>充电桩46枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800072F">
+			<name>充电桩47枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000730">
+			<name>充电桩48枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000731">
+			<name>充电桩49枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000732">
+			<name>充电桩50枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000733">
+			<name>充电桩51枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000734">
+			<name>充电桩52枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000735">
+			<name>充电桩53枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000736">
+			<name>充电桩54枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000737">
+			<name>充电桩55枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000738">
+			<name>充电桩56枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="08000739">
+			<name>充电桩57枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800073A">
+			<name>充电桩58枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800073B">
+			<name>充电桩59枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800073C">
+			<name>充电桩60枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800073D">
+			<name>充电桩61枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800073E">
+			<name>充电桩62枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+		<dataItem id="0800073F">
+			<name>充电桩63枪充电状态</name>
+			<length>1</length> 
+			<value key="00">空闲</value>  
+			<value key="01">低压辅助上电阶段</value> 
+			<value key="02">握手阶段</value>  
+			<value key="03">充电参数配置阶段</value>  
+			<value key="04">充电阶段</value>  
+			<value key="05">充电结束阶段</value> 
+			<value key="10">充电故障处理阶段</value> 
+			<value key="other">未知</value>
+		</dataItem>
+	</dataItem>
+	<dataItem id="08050000" protocol="csg13" region="南网">
+		<name>充电枪限定功率值</name>
+		<length>unknown</length>
+		<splitByLength>
+			<name>充电枪数量</name>
+			<length>1</length>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>限定功率信息</name>
+			<length>unknown</length>
+			<lengthrule>5 * 充电枪数量</lengthrule>
+			<type>POWERGUNLIMIT</type>
+		</splitByLength>
+	</dataItem>
+	<template id="POWERGUNLIMIT" protocol="csg13" region="南网">
+		<length>5</length>
+		<name>枪号限定功率值</name>
+		<splitByLength>
+			<name>枪号</name>
+			<length>1</length>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>限定功率值</name>
+			<length>4</length>
+			<type>BCD</type>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</splitByLength>
+	</template>
+	<dataItem id="08060000" protocol="csg13" region="南网">
+		<name>充电枪额定功率值</name>
+		<length>unknown</length>
+		<splitByLength>
+			<name>充电枪数量</name>
+			<length>1</length>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>额定功率信息</name>
+			<length>unknown</length>
+			<lengthrule>5 * 充电枪数量</lengthrule>
+			<type>POWERGUNNORMAL</type>
+		</splitByLength>
+	</dataItem>
+	<template id="POWERGUNNORMAL" protocol="csg13" region="南网">
+		<length>5</length>
+		<name>枪号额定功率值</name>
+		<splitByLength>
+			<name>枪号</name>
+			<length>1</length>
+			<type>BCD</type>
+		</splitByLength>
+		<splitByLength>
+			<name>额定功率值</name>
+			<length>4</length>
+			<type>BCD</type>
+			<unit>kW</unit>
+			<decimal>4</decimal>
+		</splitByLength>
+	</template>
+	<dataItem id="08000515" protocol="csg13" region="南网">
+		<name>当前空调调控状态</name>
+		<length>1</length> 
+		<value key="00">空调调控未开始</value>  
+		<value key="01">空调正在调控</value> 
+		<value key="02">空调调控已完成</value>  
+		<value key="03">空调已经完成最大下调量</value>  
+		<value key="04">用户自主调节温度</value>  
+		<value key="05">空调处于关机状态</value> 
+		<value key="06">测量点档案无效或属性不匹配（非空调）</value> 
+		<value key="other">未知</value>
 	</dataItem>
 </config>

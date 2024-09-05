@@ -1557,7 +1557,9 @@ class SettingInterface(ScrollArea):
         self.themeCard.optionChanged.connect(lambda ci: setTheme(cfg.get(ci)))
         self.themeColorCard.colorChanged.connect(setThemeColor)
         self.micaCard.checkedChanged.connect(signalBus.micaEnableChanged)
+        self.regiongroup.configItem.valueChanged.connect(lambda: self._update_gloabl_region())
 
-        # about
-        # self.feedbackCard.clicked.connect(
-        #     lambda: QDesktopServices.openUrl(QUrl(FEEDBACK_URL)))
+    def _update_gloabl_region(self):
+        from ..plugins import protocol
+        protocol.frame_fun.globregion = cfg.get(cfg.Region)
+        print(f"update global region {protocol.frame_fun.globregion}")
