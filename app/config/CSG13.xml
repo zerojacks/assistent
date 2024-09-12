@@ -51526,7 +51526,7 @@
 		<type>METERTASK</type>
 	</dataItem>
 
-	<dataItem id="E1800030" protocol="csg13" region="南网">
+	<dataItem id="E1800060" protocol="csg13" region="南网">
 		<name>终端是否支持分钟级采集</name>
 		<length>1</length>
 		<type>BCD</type>
@@ -51534,7 +51534,7 @@
 		<value key="01">支持</value>
 		<value key="other">未知</value>
 	</dataItem>
-	<dataItem id="E1800060" protocol="csg13" region="南网">
+	<dataItem id="E1800061" protocol="csg13" region="南网">
 		<name>分钟级采集本轮用时</name>
 		<length>2</length>
 		<type>BCD</type>
@@ -54451,6 +54451,12 @@
 		<type>ARD38</type>
 		<single>YES</single>
 	</dataItem>
+	<dataItem id="E2000070" protocol="csg13" region="南网">
+		<name>操作系统异常告警</name>
+		<length>unknown</length>
+		<type>ARD39_SYS</type>
+		<single>YES</single>
+	</dataItem>
 	<dataItem id="E2000073" protocol="csg13" region="深圳">
 		<name>断线检测告警</name>
 		<length>unknown</length>
@@ -54923,6 +54929,23 @@
 			<type>DISALARMRESULT</type>
 		</splitByLength>
 	</template>
+	<template id="ARD39_SYS" protocol="csg13" region="南网">
+		<splitByLength>
+			<name>告警状态</name>
+			<length>1</length>
+			<value key="00">恢复</value>
+			<value key="01">发生</value>
+		</splitByLength>
+		<splitByLength>
+			<name>告警发生时间</name>
+			<length>6</length>
+			<time>ssmmhhDDMMYY</time>
+		</splitByLength>
+		<splitByLength>
+			<name>发生时数据</name>
+			<item>E1800030</item>
+		</splitByLength>
+	</template>
 	<template id="DISALARMRESULT" protocol="csg13" region="深圳">
 		<name>断线检测结果信息</name>
 		<splitByLength>
@@ -55251,17 +55274,41 @@
 			<type>BCD</type>
 		</splitByLength>
 	</dataItem>
+	<dataItem id="E0000190" protocol="csg13" region="南网">
+		<name>CPU 占用率阈值</name>
+		<length>2</length>
+		<decimal>2</decimal>
+		<unit>%</unit>
+	</dataItem>
+	<dataItem id="E0000191" protocol="csg13" region="南网">
+		<name>内存占用率阈值</name>
+		<length>2</length>
+		<decimal>2</decimal>
+		<unit>%</unit>
+	</dataItem>
+	<dataItem id="E0000192" protocol="csg13" region="南网">
+		<name>存储资源占用率阈值</name>
+		<length>2</length>
+		<decimal>2</decimal>
+		<unit>%</unit>
+	</dataItem>
+	<dataItem id="E0000193" protocol="csg13" region="南网">
+		<name>CPU 温度阈值</name>
+		<length>3</length>
+		<decimal>2</decimal>
+		<unit>℃</unit>
+	</dataItem>
     <dataItem id="E0000E30" protocol="csg13" region="南网">
-            <name>断线检测允许时间</name>
-            <length>2</length>
-            <type>BCD</type>
-            <unit>分</unit>
+        <name>断线检测允许时间</name>
+        <length>2</length>
+        <type>BCD</type>
+        <unit>分</unit>
     </dataItem>
     <dataItem id="E0000E31" protocol="csg13" region="南网">
-            <name>遥控信号允许时间</name>
-            <length>2</length>
-            <type>BCD</type>
-            <unit>分</unit>
+        <name>遥控信号允许时间</name>
+        <length>2</length>
+        <type>BCD</type>
+        <unit>分</unit>
     </dataItem>
 	<dataItem id="E0000E32" protocol="csg13" region="南网">
 		<name>连续无通信保电判定时间</name>

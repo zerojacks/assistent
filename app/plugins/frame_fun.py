@@ -70,7 +70,7 @@ class FrameFun:
         except ValueError:
             return None
     @staticmethod
-    def add_data(data_list, frame, data, description, location,child_items=None,color=None):
+    def add_data(data_list:dict, frame:str, data:str, description:str, location:list,child_items=None,color=None):
         new_data = {"帧域": frame, "数据": data, "说明": description,"位置":location, "颜色":color}
         if child_items is not None:
             new_data["子项"] = child_items

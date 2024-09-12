@@ -765,14 +765,25 @@ class PraseFrameData():
                                 template_items = template.findall('splitByLength')
                                 return execute_calculation(template, data, template_items)
             else:
-                for data_subitem_elem in all_items:
-                    subitem_name = data_subitem_elem.find('name').text
+                for i, data_subitem_elem in enumerate(all_items):
+                    subitem_name_item = data_subitem_elem.find('name')
                     sub_length_content = data_subitem_elem.find('length')
                     if sub_length_content is None:
                         sub_item_ele = data_subitem_elem.find('item')
+                        if subitem_name_item is not None:
+                            subitem_name = subitem_name_item.text
+                        elif sub_item_ele is not None:
+                            subitem_name = sub_item_ele.text
+                        else:
+                            subitem_name = "splitByLength{i}"
                         if sub_item_ele is not None:
                             subitem_length = frame_fun.caculate_item_box_length(data_subitem_elem, protocol) 
+
                     else:
+                        if subitem_name_item is not None:
+                            subitem_name = subitem_name_item.text
+                        else:
+                            subitem_name = "splitByLength{i}"
                         sub_length_content = sub_length_content.text
                         if sub_length_content == "unknown":
                             subitem_length = caculate_unknown_length(data_subitem_elem, data, length_maap, protocol)
