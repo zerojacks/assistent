@@ -1,0 +1,56 @@
+{
+    "BasicSeting": {
+        "Multireport": false,
+        "MultireportAdress": [],
+        "region": "南网",
+        "ReportReplay": true
+    },
+    "Material": {
+        "AcrylicBlurRadius": 15
+    },
+    "Update": {
+        "CheckUpdateAtStartUp": true
+    },
+    "MainWindow": {
+        "DpiScale": "Auto",
+        "Language": "Auto",
+        "MicaEnabled": true
+    },
+    "Folders": {
+        "Log": "D:/ProjackSpace/assistent/app/log",
+        "AppInterface": "D:/ProjackSpace/assistent/app/config/appinterface",
+        "LocalMusic": []
+    },
+    "Mqtt": {
+        "IP": "127.0.0.1",
+        "passwd": "None",
+        "Port": 1883,
+        "user": "None"
+    },
+    "Version": {
+        "node_id": "None"
+    },
+    "Problam": {
+        "conf_path": [
+            "D:/ProjackSpace/assistent/app/config/problam/example_conf.yml"
+        ]
+    },
+    "Serial": {
+        "BaudRate": 9600,
+        "DataBits": 8,
+        "Parity": "偶校验",
+        "StopBits": 1
+    },
+    "TcpClient": {
+        "IP": "127.0.0.1",
+        "Port": 1002
+    },
+    "TcpServer": {
+        "IP": "127.0.0.1",
+        "Port": 1002
+    },
+    "QFluentWidgets": {
+        "ThemeColor": "#ff009faa",
+        "ThemeMode": "Auto"
+    }
+}

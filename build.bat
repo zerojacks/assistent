@@ -37,6 +37,8 @@ REM 读取配置文件内容并更新 VERSION 和 WORK_MODE
 powershell -Command ^
     "(Get-Content -Path '%config_file%' -Encoding UTF8) | ForEach-Object { $_ -replace 'VERSION =.*', 'VERSION = \"%version%\"' -replace 'WORK_MODE =.*', 'WORK_MODE = \"%work_mode%\"' } | Set-Content -Path '%config_file%' -Encoding UTF8"
 
+REM 构建资源文件
+pyrcc5 "%current_dir%app\resource\resource.qrc" -o "%current_dir%\app\common\resource.py"
 
 REM 稍微等待以确保文件写入完成
 timeout /t 3 /nobreak >nul
