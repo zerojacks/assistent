@@ -21,6 +21,7 @@ from ..components.messageBox import Comwidget
 from ..plugins.protocol_channel import WorkerThread,AsyncCommunicator
 import string
 from ..common.config import ProtocolInfo,ConfigManager
+from ..common.versionctrl import versionctrl
 
 class CheckableHeader(QFrame):
     checkBoxClicked = pyqtSignal(bool)
@@ -789,7 +790,7 @@ class ParamFrame(QWidget):
             data = self.dataInput.toPlainText()
             if self.switchButton.isChecked():
                 if data is not None and data != '':
-                    hex_values = [x.strip() for x in data.replace(',', ' ').split()]
+                    hex_values = [x.strip() for x in data.replace(' ', '').split(',')]
                 else:
                     InfoBar.warning(
                     title=self.tr('告警'),
@@ -3080,6 +3081,221 @@ class NoramlTaskInterface(QWidget):
         # self.result.clear_frame()
         # self.result.set_frame(param)
 
+class InterFrame(QWidget):
+    frame_finfish = pyqtSignal(list, int)
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+        self.setObjectName("InterFrame")
+
+        self.pnlabel = QLabel('测量点')
+        self.pnlabel.setAlignment(Qt.AlignVCenter)
+        self.pnInput = PlainTextEdit()
+        self.pnInput.setPlaceholderText("使用英文','或'-'拆分,如1,3,5-6")
+
+        self.itemlabel = QLabel('数据标识')
+        self.itemInput = PlainTextEdit()
+        self.itemInput.setPlaceholderText("使用英文','拆分,如E0000130,E0000131")
+        self.itemInput.textChanged.connect(self.update_ui)
+
+        self.datalabel = QLabel('数据内容')
+        self.dataInput = PlainTextEdit()
+
+        self.switchButton = SwitchButton(self.tr('设置'))
+        self.switchButton.setChecked(True)
+        self.switchButton.setText(self.tr('设置'))
+        self.switchButton.checkedChanged.connect(self.onSwitchCheckedChanged)
+
+        self.button = PrimaryPushButton(self.tr('生成报文'))
+        self.button.clicked.connect(self.create_frame)
+        # Use QFormLayout to align labels and inputs
+        self.form_layout = QFormLayout()
+        self.form_layout.addRow(self.pnlabel, self.pnInput)
+        self.form_layout.addRow(self.itemlabel, self.itemInput)
+        self.form_layout.addRow(self.datalabel, self.dataInput)
+        self.form_layout.addWidget(self.switchButton)
+        self.form_layout.addWidget(self.button)
+
+        self.setLayout(self.form_layout)
+        
+        self.datalayout_index = 2
+    def update_ui(self):
+        text = self.itemInput.toPlainText()
+        if len(text) > 0 and all(c in string.hexdigits for c in text) and (int(text, 16) in (0xE0000150, 0xE0000151, 0xE0000152)):
+            item_list = self.get_item_data_list(text)
+            self.mask_widget = CheckboxGrid(item_list)
+            self.replace_layout(self.datalabel, self.dataInput, self.mask_widget)
+        else:
+            current_widget = self.form_layout.itemAt(self.datalayout_index, QFormLayout.FieldRole)
+            if current_widget and isinstance(current_widget.widget(), CheckboxGrid):
+                self.dataInput = PlainTextEdit()
+                self.replace_layout(self.datalabel, current_widget.widget(), self.dataInput)
+
+    def replace_layout(self, label, old_widget, new_widget):
+        # 移除旧的控件
+        self.form_layout.removeRow(self.datalayout_index)
+
+        # 重新创建 datalabel
+        self.datalabel = QLabel('数据内容')
+
+        # 重新添加 datalabel 和新控件
+        self.form_layout.insertRow(self.datalayout_index, self.datalabel, new_widget)
+        self.form_layout.update()
+        QCoreApplication.processEvents()
+
+    def get_item_data_list(self, text):
+        name_list = []
+        item = ConfigManager.get_config_xml(text, ProtocolInfo.PROTOCOL_CSG13.name(), "南网")
+        if item is not None:
+            allitem = item.findall('.//bit')
+            if allitem is not None:
+                for bit_elem in allitem:
+                    bit_id_attr = bit_elem.get('id')
+                    bit_name_elem = bit_elem.find('name')
+                    if bit_name_elem is not None:
+                        name_list.append(bit_name_elem.text)
+        return name_list.copy()
+
+    def get_size(self):
+        return self.qvlayout.sizeHint() + QSize(0, 50)
+    
+    def onSwitchCheckedChanged(self, isChecked):
+        if isChecked:
+            self.switchButton.setText(self.tr('设置'))
+        else:
+            self.switchButton.setText(self.tr('读取'))
+
+    def get_item_mask_data(self):
+        mask_data = self.mask_widget.get_selected_indexes()
+        data = [0] * 32
+        for mask in mask_data:
+            frame_fun.set_bit_value(data, mask - 1)
+        return data.copy()
+    
+    def create_frame(self, frame):
+        if self.switchButton.isChecked():
+            afn = 0x04
+        else:
+            afn = 0x0A
+        item_dic = {}
+        frame_len = 0
+        frame = [0x00] * FramePos.POS_DATA.value
+        input_text = self.pnInput.toPlainText()
+        if input_text:                                       
+            try:                                    
+                point_array =  frame_fun.parse_meterpoint_input(input_text)
+            except Exception as e:
+                InfoBar.warning(
+                title=self.tr('告警'),
+                content=self.tr("测量点错误!"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=2000,
+                parent=self
+            )
+                return
+        else:
+            InfoBar.warning(
+                title=self.tr('告警'),
+                content=self.tr("请输入测量点!"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=2000,
+                parent=self
+            )
+            return
+
+        item_array = []
+        input_text = self.itemInput.toPlainText()
+        if input_text:
+            try:
+                item_array = frame_fun.prase_item_by_input_text(input_text)
+            except Exception as e:
+                InfoBar.warning(
+                title=self.tr('告警'),
+                content=self.tr("数据标识错误!"),
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=2000,
+                parent=self
+            )
+                return
+        else:
+            InfoBar.warning(
+            title=self.tr('告警'),
+            content=self.tr("请输入数据标识!"),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=2000,
+            parent=self
+        )
+            return
+        
+        values_to_check = (0xE0000150, 0xE0000151, 0xE0000152)
+
+        if any(value in item_array for value in values_to_check) and len(item_array) == 1:
+            if self.switchButton.isChecked():
+                data = self.get_item_mask_data()
+                hex_values = {}
+                hex_values[0]= frame_fun.get_data_str_order(data)
+            else:
+                data = None
+                hex_values = [data] * len(item_array)
+        else:
+            data = self.dataInput.toPlainText()
+            if self.switchButton.isChecked():
+                if data is not None and data != '':
+                    hex_values = [x.strip() for x in data.replace(' ', '').split(',')]
+                else:
+                    InfoBar.warning(
+                    title=self.tr('告警'),
+                    content=self.tr("请输入数据内容!"),
+                    orient=Qt.Horizontal,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=2000,
+                    parent=self
+                )
+                    return
+            else:
+                data = None
+                hex_values = [data] * len(item_array)
+                
+        for i, item in enumerate(item_array):
+            item_dic[item] = hex_values[i]
+
+
+        adress = [0xff] * 6  # Fix the initialization of adress
+        msa = 0x10
+        seq = frame_csg.get_frame_seq(0, 1, 1, False)
+        frame_csg.init_frame(0x4a, afn, adress, msa, seq, frame)
+        frame_len += FramePos.POS_DATA.value
+        frame_len += frame_csg.get_interframe(point_array, item_dic, frame)
+        frame_len += frame_csg.set_frame_finish(frame[FramePos.POS_CTRL.value:frame_len], frame)
+        frame_csg.set_frame_len(frame_len - FramePos.POS_CTRL.value, frame)
+        self.frame_finfish.emit(frame, frame_len)
+
+class InterFrameInterface(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+
+        self.qhlayout = QHBoxLayout(self)  # 使用水平布局
+
+        self.framearea = InterFrame()
+        self.result = CustomframeResult()
+        self.framearea.frame_finfish.connect(self.display_frame)
+        self.qhlayout.addWidget(self.framearea, 6, alignment=Qt.AlignTop)
+        self.qhlayout.addWidget(self.result, 4)
+
+        StyleSheet.CUSTOM_INTERFACE.apply(self)
+    
+    def display_frame(self, frame, length):
+        self.result.clear_frame()
+        text = frame_fun.get_data_str_with_space(frame)
+        self.result.set_frame(text)
 
 class CusFrameInterface(QWidget):
     """ Pivot interface """
@@ -3107,6 +3323,10 @@ class CusFrameInterface(QWidget):
         self.addSubInterface(self.readAlarmInterface, 'readAlarmInterface', self.tr('事件告警类'))
         self.addSubInterface(self.normaltaskinterface, 'normaltaskinterface', self.tr('普通任务类'))
         self.addSubInterface(self.metertaskinterface, 'metertaskinterface', self.tr('表端任务类'))
+
+        if versionctrl.is_release() == False:
+            self.interframe = InterFrameInterface(self)
+            self.addSubInterface(self.interframe, 'interframe', self.tr('内部报文'))
 
         self.vBoxLayout.addWidget(self.pivot, 1)
         self.vBoxLayout.addWidget(self.stackedWidget, 9)

@@ -63473,4 +63473,19 @@
 		<value key="06">测量点档案无效或属性不匹配（非空调）</value> 
 		<value key="other">未知</value>
 	</dataItem>
+	<dataItem id="E0FE004E" protocol="csg13" region="南网">
+		<name>终端厂家信息</name>
+		<length>7</length> 
+		<splitByLength>
+			<name>厂商代号</name>
+			<length>4</length>
+			<type>ASCII</type>
+		</splitByLength>
+		<splitByLength>
+			<name>生产日期</name>
+			<length>3</length>
+			<type>BCD</type>
+			<time>DDMMYY</time>
+		</splitByLength>
+	</dataItem>
 </config>

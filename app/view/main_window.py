@@ -1,10 +1,10 @@
 # coding: utf-8
-from PyQt5.QtCore import QUrl, QSize, QEvent
+from PyQt5.QtCore import QUrl, QSize, QEvent, Qt
 from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5.QtWidgets import QApplication
 
 from qfluentwidgets import (NavigationAvatarWidget, NavigationItemPosition, MessageBox, FluentWindow,
-                            SplashScreen,InfoBar)
+                            SplashScreen,InfoBar, FlyoutView, PushButton, Flyout, FlyoutAnimationType)
 from qfluentwidgets import FluentIcon as FIF
 
 from .gallery_interface import GalleryInterface
@@ -24,6 +24,7 @@ from .text_interface import TextInterface
 from .view_interface import ViewInterface
 from .analysic_interface import ViewAnalysic
 from ..common.config import SUPPORT_URL, cfg, log_config
+from ..common.versionctrl import versionctrl
 from ..common.icon import Icon
 from ..common.signal_bus import signalBus
 from ..common.translator import Translator
@@ -64,8 +65,9 @@ class MainWindow(FluentWindow):
         self.sendreceive = ReceiveSendInterface(self)
         self.customFrame = CustomFrame(self)
         self.dataBaseView = DataBaseInterface(self)
-        self.appmessage = AppMessageInterface(self)
-        self.problam = Problam_Interface(self)
+        if versionctrl.is_release() == False:
+            self.appmessage = AppMessageInterface(self)
+            self.problam = Problam_Interface(self)
         self.test = StatusInfoInterface(self)
         self.framefile = FrameFileInterface(self)
         # self.param_interface = ParamInterface(self)
@@ -106,8 +108,9 @@ class MainWindow(FluentWindow):
         self.addSubInterface(self.sendreceive, FIF.SEND, t.sendreceive, pos)
         self.addSubInterface(self.customFrame, FIF.SCROLL, t.customframe, pos)
         self.addSubInterface(self.dataBaseView, FIF.ZOOM, t.dataBaseView, pos)
-        self.addSubInterface(self.appmessage, FIF.MESSAGE, t.appmessage, pos)
-        self.addSubInterface(self.problam, FIF.CHAT, t.problam, pos)
+        if versionctrl.is_release() == False:
+            self.addSubInterface(self.appmessage, FIF.MESSAGE, t.appmessage, pos)
+            self.addSubInterface(self.problam, FIF.CHAT, t.problam, pos)
         # self.addSubInterface(self.framefile, FIF.LIBRARY_FILL, t.framefile, pos)
         # self.addSubInterface(self.viewInterface, FIF.SCROLL, t.param, pos) 
 
@@ -140,6 +143,12 @@ class MainWindow(FluentWindow):
         QApplication.processEvents()
 
     def onSupport(self):
+        if versionctrl.is_release():
+            self.showComplexFlyout()
+        else:
+            self.intersupport()
+
+    def intersupport(self):
         w = MessageBox(
             '软件介绍',
             '个人开发，不接受修改需求',
@@ -150,6 +159,25 @@ class MainWindow(FluentWindow):
         if w.exec():
             # QDesktopServices.openUrl(QUrl(SUPPORT_URL))
             pass
+    def showComplexFlyout(self):
+        view = FlyoutView(
+            title=self.tr('支持作者'),
+            content=self.tr("我们致力于开发并持续改进这款桌面软件，以为您提供更好的用户体验。为了确保软件能够持续维护、定期更新以及添加更多功能，我们邀请您考虑支持我们的工作。您的捐赠将帮助我们：\n - 持续修复错误并提升性能 \n - 添加新功能和改进现有功能\n感谢您的支持！您的每一份捐赠都将对我们产生深远的影响。"),
+            image=':/gallery/images/support.png',
+        )
+
+        # add button to view
+        # button = PushButton('Action')
+        # button.setFixedWidth(120)
+        # view.addWidget(button, align=Qt.AlignRight)
+
+        # adjust layout (optional)
+        view.widgetLayout.insertSpacing(1, 5)
+        view.widgetLayout.insertSpacing(0, 5)
+        view.widgetLayout.addSpacing(5)
+
+        # show view
+        Flyout.make(view, self.navigationInterface, self.window(), FlyoutAnimationType.SLIDE_RIGHT)
 
     def resizeEvent(self, e):
         super().resizeEvent(e)

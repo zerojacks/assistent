@@ -1447,7 +1447,7 @@ class SettingInterface(ScrollArea):
         # )
 
         # # application
-        # self.aboutGroup = SettingCardGroup(self.tr('About'), self.scrollWidget)
+        self.aboutGroup = SettingCardGroup(self.tr('About'), self.scrollWidget)
         # self.helpCard = HyperlinkCard(
         #     HELP_URL,
         #     self.tr('Open help page'),
@@ -1464,14 +1464,14 @@ class SettingInterface(ScrollArea):
         #     self.tr('Help us improve PyQt-Fluent-Widgets by providing feedback'),
         #     self.aboutGroup
         # )
-        # self.aboutCard = CheckUpgradeCard(
-        #     self.tr('Check update'),
-        #     FIF.INFO,
-        #     self.tr('About'),
-        #     '© ' + self.tr('Copyright') + f" {YEAR}, {AUTHOR}. " +
-        #     self.tr('Version') + " " + VERSION,
-        #     self.aboutGroup
-        # )
+        self.aboutCard = CheckUpgradeCard(
+            self.tr('Check update'),
+            FIF.INFO,
+            self.tr('About'),
+            '© ' + self.tr('Copyright') + f" {YEAR}, {AUTHOR}. " +
+            self.tr('Version') + " " + VERSION,
+            self.aboutGroup
+        )
 
         self.__initWidget()
 
@@ -1514,7 +1514,7 @@ class SettingInterface(ScrollArea):
 
         # self.aboutGroup.addSettingCard(self.helpCard)
         # self.aboutGroup.addSettingCard(self.feedbackCard)
-        # self.aboutGroup.addSettingCard(self.aboutCard)
+        self.aboutGroup.addSettingCard(self.aboutCard)
 
         # add setting card group to layout
         self.expandLayout.setSpacing(28)
@@ -1524,7 +1524,7 @@ class SettingInterface(ScrollArea):
         self.expandLayout.addWidget(self.personalGroup)
         # self.expandLayout.addWidget(self.materialGroup)
         # self.expandLayout.addWidget(self.updateSoftwareGroup)
-        # self.expandLayout.addWidget(self.aboutGroup)
+        self.expandLayout.addWidget(self.aboutGroup)
 
     def __showRestartTooltip(self):
         """ show restart tooltip """

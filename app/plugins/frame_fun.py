@@ -31,7 +31,8 @@ class CustomMessageBox(QMessageBox):
             print("User clicked Cancel or closed the dialog")
             
 class CustomError(Exception):
-    def __init__(self, message):
+    def __init__(self, message, code=1):
+        self.code = code
         self.message = message
         super().__init__(self.message)
 
@@ -242,6 +243,14 @@ class FrameFun:
         cs = 0
         for value in data:
             cs += value
+        return (cs & 0xff)
+
+    @staticmethod
+    def caculate_inter_cs(data):
+        cs = 0
+        for value in data:
+            cs += value
+        cs += 0xaa
         return (cs & 0xff)
 
     @staticmethod
@@ -918,7 +927,7 @@ class FrameFun:
     @staticmethod
     def prase_item_by_input_text(input_text):
         # Split the input by commas or spaces, and remove any leading/trailing whitespace
-        hex_values = [x.strip() for x in input_text.replace(',', ' ').split()]
+        hex_values = [x.strip() for x in input_text.replace(' ', '').split(',')]
 
         # Convert the hexadecimal strings to integers
         item_array = [int(x, 16) for x in hex_values]
@@ -934,7 +943,7 @@ class FrameFun:
     @staticmethod
     def prase_item_input(input_text, frame):
         # Split the input by commas or spaces, and remove any leading/trailing whitespace
-        hex_values = [x.strip() for x in input_text.replace(',', ' ').split()]
+        hex_values = [x.strip() for x in input_text.replace(' ', '').split(',')]
 
         # Convert the hexadecimal strings to integers
         item_array = [int(x, 16) for x in hex_values]

@@ -11,6 +11,7 @@ from ..plugins import protocol
 from ..plugins.frame_fun import FrameFun as frame_fun
 from .analysic_interface import CustomTreeWidgetItem,CustomTreeWidget
 from ..common.config import cfg, ProtocolInfo,ConfigManager
+from ..common.versionctrl import versionctrl
 from ..common.signal_bus import signalBus
 from ..plugins.MeterTask import MeterTask
 from ..plugins.custom_frame import custom_frame
@@ -401,12 +402,14 @@ class FrameInterface(QWidget):
 
         self.itemterface = CustomItem()
         self.tools = OtherTool()
-        self.frame_tools = task_data_body_view()
         
 
         self.addSubInterface(self.itemterface, 'itemterface', self.tr('数据解析'))
         self.addSubInterface(self.tools, 'tools', self.tr('工具集合'))
-        self.addSubInterface(self.frame_tools, 'frame_tools', self.tr('自定义报文解析'))
+
+        if versionctrl.is_release() == False:
+            self.frame_tools = task_data_body_view()
+            self.addSubInterface(self.frame_tools, 'frame_tools', self.tr('自定义报文解析'))
 
         self.vBoxLayout.addWidget(self.pivot, 1)
         self.vBoxLayout.addWidget(self.stackedWidget, 9)

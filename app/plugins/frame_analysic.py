@@ -41,6 +41,8 @@ class FrameProcessor(QObject):
                 meter_task.analysic_meter_task(frame, show_data, 0)
             elif FrameCCO.is_cco_frame(frame):
                 FrameCCO.Analysis_cco_frame_by_afn(frame, show_data, 0)
+            else:
+                raise CustomError('不能识别规约报文', 2)
             
             result['报文'] = frame_fun.get_data_str_with_space(frame)
             result['结果'] = show_data

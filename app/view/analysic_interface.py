@@ -462,7 +462,18 @@ class Alalysic(QWidget):
             self.reconnect_text_changed()
 
     def err_exception(self, err:CustomError):
-        CustomMessageBox("告警",f"{err.message}")
+        if err.code == 2:
+            InfoBar.error(
+                title=self.tr('失败'),
+                content=self.tr(f"{err.message}"),
+                orient=QtCore.Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=2000,
+                parent=self
+            )
+        else:
+            CustomMessageBox("告警",f"{err.message}")
 
 class ViewAnalysic(GalleryInterface):
     """ Icon interface """
