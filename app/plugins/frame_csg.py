@@ -297,7 +297,7 @@ class FrameCsg():
             return False
         frame_length = ((frame[2] << 8) | frame[1])
         if frame_length + 8 != len(frame):
-            print("length err")
+            print("length err expire {} but real {}".format((frame_length + 8),(len(frame))))
             return False
         if frame[-1] != 0x16:
             return False
@@ -441,6 +441,7 @@ def get_control_code_str(control,start_pos):
     prm = binary_array[1] 
     acd = binary_array[2]
     fcv = binary_array[3]
+    print(binary_array)
     control_code = control & 0x0f
     if prm == 1:
         prm_str = "来自启动站"

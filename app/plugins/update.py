@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QThread, pyqtSignal,Qt
+from PyQt5.QtCore import QThread, pyqtSignal,Qt,QFile,QTextStream
 from ..common.config import cfg, APP_EXEC, FEEDBACK_URL, AUTHOR, VERSION, YEAR, isWin11,REPO_OWNER,REPO_NAME,Authorization,APP_NAME,UPDATE_FILE,UPDATE_DIR
 from qfluentwidgets import InfoBar,MessageBox,TextEdit,PrimaryPushButton
 import requests,os,re,zipfile,shutil,subprocess
@@ -329,3 +329,41 @@ class UpgradeWindows(QMainWindow):
     def start_upgrade(self):
         signalBus.upgrade.emit()
         self.close()
+
+class ReleaseWindows(QMainWindow):
+    def __init__(self, file:QFile, parent=None):
+        super(ReleaseWindows, self).__init__(parent)
+        self.file = file
+        self.init_ui()
+
+    def init_ui(self):
+        self.setWindowTitle(self.tr('版本发布说明'))
+        self.setFixedSize(500, 300)
+        self.setWindowIcon(QIcon(':/gallery/images/logo.png'))
+
+        central_widget = QWidget(self)
+        self.setCentralWidget(central_widget)
+
+        central_layout = QVBoxLayout(central_widget)
+        central_layout.setContentsMargins(0, 0, 0, 0)
+        central_layout.setAlignment(Qt.AlignTop)
+        
+        self.text = TextEdit(self)
+        self.text.setReadOnly(True)
+        central_layout.addWidget(self.text)
+        self.setWindowFlags(self.windowFlags() & ~Qt.WindowMaximizeButtonHint & ~Qt.WindowMinimizeButtonHint)
+        self.read_release_info()
+
+    def read_release_info(self):
+        if self.file.open(QFile.ReadOnly | QFile.Text):
+            stream = QTextStream(self.file)
+            stream.setCodec("UTF-8")
+            content = stream.readAll()
+            self.file.close()
+            print(content)
+            self.text.setMarkdown(content)
+            self.show()
+        else:
+            print('文件打开失败')
+            self.close()
+        cfg.set(cfg.releaseinfo, False)

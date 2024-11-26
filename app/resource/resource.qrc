@@ -187,5 +187,8 @@
 
         <file>i18n/gallery.zh_CN.qm</file>
         <file>i18n/gallery.zh_HK.qm</file>
+
+        <file>doc/release_debug.md</file>
+        <file>doc/release_release.md</file>
     </qresource>
 </RCC>

@@ -1,5 +1,5 @@
 # coding: utf-8
-from PyQt5.QtCore import QUrl, QSize, QEvent, Qt
+from PyQt5.QtCore import QUrl, QSize, QEvent, Qt,QFile
 from PyQt5.QtGui import QIcon, QDesktopServices
 from PyQt5.QtWidgets import QApplication
 
@@ -23,7 +23,7 @@ from .setting_interface import SettingInterface
 from .text_interface import TextInterface
 from .view_interface import ViewInterface
 from .analysic_interface import ViewAnalysic
-from ..common.config import SUPPORT_URL, cfg, log_config
+from ..common.config import SUPPORT_URL, cfg, log_config,WORK_MODE
 from ..common.versionctrl import versionctrl
 from ..common.icon import Icon
 from ..common.signal_bus import signalBus
@@ -35,9 +35,10 @@ from .frame_file_anasic_interface import FrameFileInterface
 from .custom_frame_interface import CustomFrame
 from .database_interface import DataBaseInterface
 from .app_message_interface import AppMessageInterface
-from ..plugins.update import UpgradeWindows
+from ..plugins.update import UpgradeWindows, ReleaseWindows
 from PyQt5.QtCore import QThread
 from ..common.channel_info import channel_info
+import os
 
 class MainWindow(FluentWindow):
 
@@ -80,6 +81,7 @@ class MainWindow(FluentWindow):
         self.initNavigation()
         self.splashScreen.finish()
         # self.check_upgrade()
+        self.release_info()
 
     def connectSignalToSlot(self):
         signalBus.micaEnableChanged.connect(self.setMicaEffectEnabled)
@@ -218,3 +220,14 @@ class MainWindow(FluentWindow):
         # 调用父类的 closeEvent 以确保正常关闭窗口
         # event.accept()
         super().closeEvent(event)
+
+    def release_info(self):
+        if cfg.get(cfg.releaseinfo):
+            path = f':/gallery/doc/release_{WORK_MODE}.md'
+            if QFile.exists(path):
+                self.displayReleaseInfo(QFile(path))
+
+    def displayReleaseInfo(self, file:QFile):
+        self.release_window = ReleaseWindows(file, self)
+        self.release_window.setWindowFlags(self.release_window.windowFlags() & ~Qt.WindowStaysOnTopHint)
+        self.release_window.show()

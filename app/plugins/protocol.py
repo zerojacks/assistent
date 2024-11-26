@@ -205,7 +205,7 @@ def prase_type_item(data_item_elem, data_segment, index, need_delete, singal_len
                     subitem_element_name = subitem_value_element.find('name').text
                     subitem_value = f"[{data_item}]-{subitem_element_name}"
                 else:
-                     subitem_value = f"[{data_item}]"
+                    subitem_value = f"[{data_item}]"
                 subitem_value = [subitem_name, item, subitem_value, [index + pos,index + pos +singal_length]]
                 result[i] = subitem_value
                 i += 1
@@ -543,17 +543,17 @@ def parse_data_item(data_item_elem, data_segment, index, need_delete, protocol):
         singal_result,color = prase_value_item(data_item_elem, data_segment, index,  need_delete)
         result = {data_item_id: [data_item_name, data_segment, singal_result,[index, index + len(data_segment)]]}
     elif data_item_elem.find('time') is not None:
-       # 解析时间数据
-       subitem_time_format = data_item_elem.find('time').text
-       subitem_type = data_item_elem.find('type')
-       data_type = ""
-       if subitem_type is not None:
-           data_type = subitem_type.text
-       time_data = data_segment[:6]
-       if data_type in ("BIN","Bin","bin"):
-           time_data = frame_fun.binary_to_bcd(time_data)
-       singal_result = frame_fun.parse_time_data(time_data,subitem_time_format,need_delete)
-       result = {data_item_id: [data_item_name, data_segment, singal_result,[index, index + len(data_segment)]]}
+        # 解析时间数据
+        subitem_time_format = data_item_elem.find('time').text
+        subitem_type = data_item_elem.find('type')
+        data_type = ""
+        if subitem_type is not None:
+            data_type = subitem_type.text
+        time_data = data_segment[:6]
+        if data_type in ("BIN","Bin","bin"):
+            time_data = frame_fun.binary_to_bcd(time_data)
+        singal_result = frame_fun.parse_time_data(time_data,subitem_time_format,need_delete)
+        result = {data_item_id: [data_item_name, data_segment, singal_result,[index, index + len(data_segment)]]}
         # 判断是否包含splitbit标签
     elif data_item_elem.find('splitbit') is not None:
         # 包含splitbit标签，则先解析splitbit数据
