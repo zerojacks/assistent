@@ -15,6 +15,18 @@ app/log
 *.ipa
 *.apk
 *.pyc
+
+# Environment Variables
+.env
+*.env
+!.env.example
+
+# Logs and temporary files
+*.log
+__pycache__/
+*.py[cod]
+*$py.class
+
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
