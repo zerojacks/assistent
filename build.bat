@@ -2,6 +2,8 @@
 @REM REM 设置控制台编码为 UTF-8
 chcp 65001 >nul
 
+REM  .\build.bat D:\\ProjackSpace\\tmpbuild 1.2.6 debug
+
 REM 获取当前脚本所在的文件夹路径
 set "current_dir=%~dp0"
 
@@ -52,7 +54,7 @@ REM 执行打包命令，使用生成的目标路径作为 distpath
 pyinstaller -y --windowed ^
     --add-data "%current_dir%app\config;./app/config" ^
     --add-data "%current_dir%app\assets;./app/assets" ^
-    --icon="%current_dir%app\resource\images\logo.png" ^
+    --icon="%current_dir%app/resource/images/logo.png" ^
     --distpath="%distpath%\%work_mode%\%version%" ^
     Assistent.py
 
