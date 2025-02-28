@@ -614,8 +614,8 @@ class FrameFun:
     #     find_protocol = protocol.upper()
     #     # data_item_id = data_item_id.upper()
     #     if "DLT/645" in find_protocol:
-    #         if find_protocol != ProtocolInfo.PROTOCOL_DLT64507.name():
-    #             find_protocol = ProtocolInfo.PROTOCOL_DLT64507.name()
+    #         if find_protocol != ProtocolInfo.PROTOCOL_DLT64507:
+    #             find_protocol = ProtocolInfo.PROTOCOL_DLT64507
     #         itemconfig = config_645.get_item(data_item_id, find_protocol, region)
     #         if itemconfig is not None:
     #             return itemconfig

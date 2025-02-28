@@ -186,12 +186,81 @@ class QframeConfig(QObject):
                 "protocol": target_protocol,
                 "region": region
             }
+
+            # Find the <template> element with the specified attributes
+            template_element = None
             for template in root.findall(".//template"):
                 if all(template.get(attr) == value for attr, value in template_attributes.items()):
-                    return template
-            return None
+                    template_element = template
+                    break
 
-        return find_template_element(root, template, protocol, region)
+            return template_element
+        protocol = protocol.lower()
+        target = find_template_element(root, template, protocol, region)
+        if target is None:
+            protocol = protocol.upper()
+            target = find_template_element(root, template, protocol, region)
+            if target is None:
+                region = "南网"
+                protocol = protocol.lower()
+                target = find_template_element(root, template, protocol, region)
+                if target is None:
+                    protocol = protocol.upper()
+                    target = find_template_element(root, template, protocol, region)
+        return target
+    
+    def get_item(self, item_id, protocol, region, dir=None):
+        def is_vaild_data_item(data_item, target_protocol, tagrget_region, dir=None):
+            attri_protocol = data_item.get('protocol')
+            if attri_protocol is not None:
+                attri_dir = data_item.get('dir')
+                if attri_dir is not None and dir is not None:
+                    if int(attri_dir) != dir:
+                        return False
+                protocols = [protocol.upper() for protocol in attri_protocol.split(',')]
+                # 判断目标protocol是否在列表中
+                target_protocol = target_protocol.upper()
+                if target_protocol in protocols:
+                    attri_region = data_item.get('region')
+                    if attri_region is not None:
+                        regions = attri_region.split(',')
+                        if tagrget_region in regions:
+                            return True
+            return False
+        def find_target_dataitem(root, target_id, target_protocol, region, dir=None):
+            target_node = root.findall(".//*[@id='{}']".format(target_id,target_protocol,region))
+            if target_node is None:
+                print("No node found with id {} protocol {} and region {}".format(target_id,target_protocol,region))
+                return None
+            #当前标签无法找到
+            print("found with id {} protocol {} and region {}".format(target_id,target_protocol,region))
+            for node in target_node:
+                if is_vaild_data_item(node, target_protocol, region, dir):
+                    return node
+                else:
+                    parent = node.getparent()
+                    while parent is not None:
+                        if is_vaild_data_item(parent, target_protocol, region, dir):
+                            return node
+                        parent = parent.getparent()
+            print("No parent found with protocol {} and region {}".format(target_protocol,region))
+            return None
+        if self.config is None:
+            return None
+        root = self.config.getroot()
+        protocol = protocol.lower()
+        target = find_target_dataitem(root, item_id, protocol, region, dir)
+        if target is None:
+            protocol = protocol.upper()
+            target = find_target_dataitem(root, item_id, protocol, region, dir)
+            if target is None:
+                region = "南网"
+                protocol = protocol.lower()
+                target = find_target_dataitem(root, item_id, protocol, region, dir)
+                if target is None:
+                    protocol = protocol.upper()
+                    target = find_target_dataitem(root, item_id, protocol, region, dir)
+        return target
 
 class LogConfig:
     def __init__(self, log_dir='app/log', log_level=logging.INFO):
@@ -304,11 +373,20 @@ class ConfigManager:
             config_instance.load(config_file)
             ConfigManager.thread_local.config_instances[config_key] = config_instance
         
-        return ConfigManager.thread_local.config_instances[config_key].get_template_item(data_item_id, protocol, region)
+        return ConfigManager.thread_local.config_instances[config_key].get_item(data_item_id, protocol, region)
 
     @staticmethod
-    def get_template_element(template:str, protocol:str, region:str):
-        return ConfigManager.get_config_xml(template, protocol, region)
+    def get_template_element(template:str, protocol:str, region:str, dir=None):
+        ConfigManager._initialize_thread_local()
+        if dir is None:
+            dir = "app/config"
+        config_key = f"{protocol}_{region}"
+        if config_key not in ConfigManager.thread_local.config_instances:
+            config_instance = QframeConfig()
+            config_file = os.path.join(dir, f"{protocol}.xml")
+            config_instance.load(config_file)
+            ConfigManager.thread_local.config_instances[config_key] = config_instance
+        return ConfigManager.thread_local.config_instances[config_key].get_template_item(template, protocol, region)
 
     @staticmethod
     def close_config(self):

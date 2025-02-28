@@ -1,4 +1,5 @@
 from asyncio.windows_events import ERROR_CONNECTION_ABORTED
+from email.policy import default
 from xml.dom.expatbuilder import FragmentBuilder
 from ..plugins.frame_fun import FrameFun as frame_fun
 from ..plugins.frame_fun import CustomError
@@ -643,13 +644,13 @@ def judge_is_exit_pw(data_segment, item_element=None, data_time=None,with_time=F
     while total_len > pos:
         item = data_segment[2 + pos:6 + pos]
         data_item = frame_fun.get_data_str_reverser(item)
-        data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+        data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
         if data_item_elem is not None:
             sub_length_cont = data_item_elem.find('length').text
             if sub_length_cont is not None:
                 if sub_length_cont.upper() in "UNKNOWN":
                     prase_data = PraseFrameData()
-                    sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[6:], ProtocolInfo.PROTOCOL_CSG13.name())
+                    sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[6:], ProtocolInfo.PROTOCOL_CSG13)
                 else:
                     sub_length = int(sub_length_cont)
                 pos += sub_length + 6
@@ -675,7 +676,7 @@ def guest_next_data_is_cur_item_data(item_element, data_segment, data_time):
         if next_item == item_element.get('id'):
             return False
         
-        data_item_elem = ConfigManager.get_config_xml(next_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+        data_item_elem = ConfigManager.get_config_xml(next_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
         if data_item_elem is not None:
             return False
         if is_valid_bcd_time(data_segment[length:length+6]):
@@ -795,7 +796,7 @@ def recaculate_sub_length(data_item_elem, data_segment):
     sub_length_cont = data_item_elem.find('length').text
     if sub_length_cont.upper() in "UNKNOWN":
         prase_data = PraseFrameData()
-        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment, ProtocolInfo.PROTOCOL_CSG13.name())
+        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment, ProtocolInfo.PROTOCOL_CSG13)
     else:
         sub_length = int(sub_length_cont)
         if data_item_elem.get("protocol") and data_item_elem.get("region"):
@@ -817,7 +818,7 @@ def recaculate_sub_length(data_item_elem, data_segment):
 
 def try_get_item_and_point(item, DA):
     data_item = frame_fun.get_data_str_reverser(item)
-    data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+    data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
     return data_item_elem,data_item
 
 def get_data_dinsty(dinsty):
@@ -937,7 +938,7 @@ def Analysic_csg_ack_frame(frame, dir, prm, result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item_elem is not None:
                 sublength = data_item_elem.find('length')
@@ -947,7 +948,7 @@ def Analysic_csg_ack_frame(frame, dir, prm, result_list,start_pos):
                     sub_length = len(sub_datament[4:])
                 sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                 prase_data = PraseFrameData()
-                alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,sub_datament, index + pos + 4)
+                alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,sub_datament, index + pos + 4)
                 frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 name = data_item_elem.find('name').text
                 dis_data_identifier = "数据标识编码：" + f"[{data_item}]" + "-" + name
@@ -1013,7 +1014,7 @@ def Analysic_csg_link_frame(frame,dir, prm,result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item_elem is not None:
                 if dir == 1 and prm == 0:
@@ -1025,14 +1026,14 @@ def Analysic_csg_link_frame(frame,dir, prm,result_list,start_pos):
                     if sub_length_cont is not None:
                         sub_length = sub_length_cont.text
                         if sub_length.upper() in "UNKNOWN":
-                            sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                            sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                         else:
                             sub_length = int(sub_length)
                     else:
                         sub_length = len(data_segment[4:])
 
                     sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
-                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,sub_datament, index + pos + 4)
+                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,sub_datament, index + pos + 4)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 name = data_item_elem.find('name').text
                 dis_data_identifier = "数据标识编码：" + f"[{data_item}]" + "-" + name
@@ -1110,7 +1111,7 @@ def Analysic_csg_write_frame(frame, dir, prm,result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item_elem is not None:
                 prefix_index = 0
@@ -1127,11 +1128,11 @@ def Analysic_csg_write_frame(frame, dir, prm,result_list,start_pos):
                             prefix_index = 3
                     sub_length_cont = data_item_elem.find('length').text
                     if sub_length_cont.upper() in "UNKNOWN":
-                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                     else:
                         sub_length = int(sub_length_cont)
                     sub_datament = data_segment[pos + 4 + prefix_index:pos + 4 + prefix_index + sub_length]
-                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,sub_datament, index + pos + prefix_index + 4)
+                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,sub_datament, index + pos + prefix_index + 4)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 name = data_item_elem.find('name').text
                 dis_data_identifier = "数据标识编码：" + f"[{data_item}]" + "-" + name
@@ -1207,7 +1208,7 @@ def Analysic_csg_security_frame(frame, dir, prm,result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item == "E0010182":
                 dir = 1
@@ -1216,7 +1217,7 @@ def Analysic_csg_security_frame(frame, dir, prm,result_list,start_pos):
                 if dir == 1 and prm == 0:#上行回复
                     sub_length_cont = data_item_elem.find('length').text
                     if sub_length_cont.upper() in "UNKNOWN":
-                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         new_datament = sub_datament
                     else:
@@ -1224,7 +1225,7 @@ def Analysic_csg_security_frame(frame, dir, prm,result_list,start_pos):
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         sub_length, new_datament = recaculate_sub_length(data_item_elem, sub_datament)
 
-                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,new_datament, index + pos + 4)
+                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,new_datament, index + pos + 4)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 else:
                     sub_length = 0#下行读取报文
@@ -1297,20 +1298,20 @@ def Analysic_csg_read_cur_frame(frame, dir, prm,result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item_elem is not None:
                 if dir == 1 and prm == 0:#上行回复
                     sub_length_cont = data_item_elem.find('length').text
                     if sub_length_cont.upper() in "UNKNOWN":
-                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         new_datament = sub_datament
                     else:
                         sub_length = int(sub_length_cont)
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         sub_length, new_datament = recaculate_sub_length(data_item_elem, sub_datament)
-                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,new_datament, index + pos + 4)
+                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,new_datament, index + pos + 4)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 else:
                     sub_length = 0#下行读取报文
@@ -1405,7 +1406,7 @@ def Analysic_csg_read_history_frame(frame, dir, prm,result_list,start_pos):
                     sub_length = int(data_item_elem.find('length').text)
                     sub_datament = data_segment[pos:pos + sub_length]
                     sub_length, new_datament = recaculate_sub_length(data_item_elem, sub_datament)
-                    alalysic_result = prase_data.parse_data_item(data_item_elem,new_datament, index + pos, False, ProtocolInfo.PROTOCOL_CSG13.name())
+                    alalysic_result = prase_data.parse_data_item(data_item_elem,new_datament, index + pos, False, ProtocolInfo.PROTOCOL_CSG13)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 else:
                     sub_length = 0#下行读取报文
@@ -1490,7 +1491,7 @@ def Analysic_csg_read_param_frame(frame, dir, prm,result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item_elem is not None:
                 if dir == 1 and prm == 0:#上行回复
@@ -1503,7 +1504,7 @@ def Analysic_csg_read_param_frame(frame, dir, prm,result_list,start_pos):
 
                     sub_length_cont = data_item_elem.find('length').text
                     if sub_length_cont.upper() in "UNKNOWN":
-                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                         sub_datament = data_segment[pos + 4 + prefix_index:pos + 4 + prefix_index + sub_length]
                         new_datament = sub_datament
                     else:
@@ -1511,7 +1512,7 @@ def Analysic_csg_read_param_frame(frame, dir, prm,result_list,start_pos):
                         sub_datament = data_segment[pos + 4 + prefix_index:pos + 4 + prefix_index + sub_length]
                         sub_length, new_datament = recaculate_sub_length(data_item_elem, sub_datament)
 
-                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,new_datament, index + pos + 4 + prefix_index)
+                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,new_datament, index + pos + 4 + prefix_index)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 else:
                     sub_length = 0#下行读取报文
@@ -1583,13 +1584,33 @@ def Analysic_csg_read_task_frame(frame, dir, prm,result_list,start_pos):
 
         frame_fun.add_data(sub_result, f"数据标识编码DI",frame_fun.get_data_str_with_space(item),task_name,[18,22])
         task_kind = frame[22]
-        frame_fun.add_data(task_result, f"数据结构方式",frame_fun.to_hex_string_with_space(task_kind),"自描述方式",[22,23])
+        
+        match task_kind:
+            case 0x00:
+                task_kind_str = "自描述方式"
+            case 0x01:
+                task_kind_str = "任务模板"
+            case 0x02:
+                task_kind_str = "补上报"
+            case _:
+                task_kind_str = "未知"   
+
+        frame_fun.add_data(task_result, f"数据结构方式",frame_fun.to_hex_string_with_space(task_kind), task_kind_str,[22,23])
         pncount = frame[23]
 
-        item_count = frame[24]
-        frame_fun.add_data(task_result, f"数据组数",frame_fun.to_hex_string_with_space(frame[23:25]),f"信息点标识数{pncount},数据标识编码数{item_count},共有{pncount * item_count}个数据组数",[23,25])
-        data_segment = valid_data_segment[9:]
-        length -= 9
+        expire_item = frame[27:31]
+        expire_item_element, data_item = try_get_item_and_point(expire_item, DA)
+        if expire_item_element is None:
+            item_count = 1
+            frame_fun.add_data(task_result, f"数据组数",frame_fun.to_hex_string_with_space(frame[23:24]),f"数据组数{pncount}",[23,24])
+            data_segment = valid_data_segment[8:]
+            length -= 8
+            index = 16 + 8 + start_pos
+        else:
+            item_count = frame[24]
+            frame_fun.add_data(task_result, f"数据组数",frame_fun.to_hex_string_with_space(frame[23:25]),f"信息点标识数{pncount},数据标识编码数{item_count},共有{pncount * item_count}个数据组数",[23,25])
+            data_segment = valid_data_segment[9:]
+            length -= 9
     else:
         data_segment = valid_data_segment
     data_item_elem = None
@@ -1624,14 +1645,14 @@ def Analysic_csg_read_task_frame(frame, dir, prm,result_list,start_pos):
                 if dir == 1:#上行回复
                     sub_length_cont = data_item_elem.find('length').text
                     if sub_length_cont.upper() in "UNKNOWN":
-                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos:], ProtocolInfo.PROTOCOL_CSG13.name())
+                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos:], ProtocolInfo.PROTOCOL_CSG13)
                         sub_datament = data_segment[pos:pos + sub_length]
                         new_datament = sub_datament
                     else:
                         sub_length = int(sub_length_cont)
                         sub_datament = data_segment[pos:pos + sub_length]
                         sub_length, new_datament = recaculate_sub_length(data_item_elem, sub_datament)
-                    alalysic_result = prase_data.parse_data_item(data_item_elem,new_datament, index + pos, False, ProtocolInfo.PROTOCOL_CSG13.name())
+                    alalysic_result = prase_data.parse_data_item(data_item_elem,new_datament, index + pos, False, ProtocolInfo.PROTOCOL_CSG13)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 else:
                     sub_length = 0#下行读取报文
@@ -1728,13 +1749,13 @@ def Analysic_csg_read_alarm_frame(frame, dir, prm,result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item_elem is not None:
                 if dir == 1:#上行回复
                     sub_length_cont = data_item_elem.find('length').text
                     if sub_length_cont.upper() in "UNKNOWN":
-                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         new_datament = sub_datament
                     else:
@@ -1742,7 +1763,7 @@ def Analysic_csg_read_alarm_frame(frame, dir, prm,result_list,start_pos):
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         sub_length, new_datament = recaculate_sub_length(data_item_elem, sub_datament)
 
-                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,new_datament, index + pos + 4)
+                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,new_datament, index + pos + 4)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 else:
                     sub_length = 0#下行读取报文
@@ -1822,13 +1843,13 @@ def Analysic_csg_read_event_frame(frame, dir, prm,result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item_elem is not None:
                 if dir == 1 and prm == 0:#上行回复
                     sub_length_cont = data_item_elem.find('length').text
                     if sub_length_cont.upper() in "UNKNOWN":
-                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         new_datament = sub_datament
                     else:
@@ -1836,7 +1857,7 @@ def Analysic_csg_read_event_frame(frame, dir, prm,result_list,start_pos):
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         sub_length, new_datament = recaculate_sub_length(data_item_elem, sub_datament)
 
-                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,new_datament, index + pos + 4)
+                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,new_datament, index + pos + 4)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 else:
                     sub_length = 0#下行读取报文
@@ -1916,14 +1937,14 @@ def Analysic_csg_relay_frame(frame, dir, prm,result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item_elem is not None:
                 if dir == 1 and prm == 0:#上行回复
                     frame_result = []
                     sub_length_cont = data_item_elem.find('length').text
                     if sub_length_cont.upper() in "UNKNOWN":
-                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         new_datament = sub_datament
                     else:
@@ -1943,7 +1964,7 @@ def Analysic_csg_relay_frame(frame, dir, prm,result_list,start_pos):
                 else:
                     sub_length_cont = data_item_elem.find('length').text
                     if sub_length_cont.upper() in "UNKNOWN":
-                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                        sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         new_datament = sub_datament
                     else:
@@ -1951,7 +1972,7 @@ def Analysic_csg_relay_frame(frame, dir, prm,result_list,start_pos):
                         sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                         sub_length, new_datament = recaculate_sub_length(data_item_elem, sub_datament)
 
-                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,new_datament, index + pos + 4)
+                    alalysic_result = prase_data.parse_data(data_item,ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,new_datament, index + pos + 4)
                     frame_fun.prase_data_with_config(alalysic_result, False,item_data)
                 name = data_item_elem.find('name').text
                 dis_data_identifier = "数据标识编码：" + f"[{data_item}]" + "-" + name
@@ -2016,12 +2037,12 @@ def Analysic_csg_topo_frame(frame, dir, prm,result_list,start_pos):
             frame_fun.add_data(sub_result,f"<第{num + 1}组>信息点标识DA", frame_fun.get_data_str_with_space(DA), point_str, [index + pos, index + pos + 2])
             pos += 2
 
-            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion)
+            data_item_elem = ConfigManager.get_config_xml(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion)
             item_data = []
             if data_item_elem is not None:
                 sub_length_cont = data_item_elem.find('length').text
                 if sub_length_cont.upper() in "UNKNOWN":
-                    sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13.name())
+                    sub_length = prase_data.caculate_item_length(data_item_elem, data_segment[pos + 4:], ProtocolInfo.PROTOCOL_CSG13)
                     sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                     new_datament = sub_datament
                 else:
@@ -2029,7 +2050,7 @@ def Analysic_csg_topo_frame(frame, dir, prm,result_list,start_pos):
                     sub_datament = data_segment[pos + 4:pos + 4 + sub_length]
                     sub_length, new_datament = recaculate_sub_length(data_item_elem, sub_datament)
 
-                alalysic_result = prase_data.parse_data(data_item, ProtocolInfo.PROTOCOL_CSG13.name(), frame_fun.globregion,new_datament, index + pos + 4)
+                alalysic_result = prase_data.parse_data(data_item, ProtocolInfo.PROTOCOL_CSG13, frame_fun.globregion,new_datament, index + pos + 4)
                 # print(alalysic_result)
                 frame_fun.prase_data_with_config(alalysic_result, False, item_data)
                 # else:

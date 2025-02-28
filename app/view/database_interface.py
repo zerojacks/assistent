@@ -146,7 +146,7 @@ class CustomItem(QWidget):
             cleaned_string = data.replace(' ', '').replace('\n', '')
             data_content = [int(cleaned_string[i:i + 2], 16) for i in range(0, len(cleaned_string), 2)]
             protocol.frame_fun.globregion = cfg.get(cfg.Region)
-            template_element = ConfigManager.get_config_xml(item, ProtocolInfo.PROTOCOL_CSG13.name(),frame_fun.globregion)
+            template_element = ConfigManager.get_config_xml(item, ProtocolInfo.PROTOCOL_CSG13,frame_fun.globregion)
             if template_element is None:
                 InfoBar.warning(
                 title=self.tr('告警'),
@@ -158,7 +158,7 @@ class CustomItem(QWidget):
                 parent=self
             )
                 return
-            show_data = protocol.parse_data_item(template_element, data_content, 0, 0, ProtocolInfo.PROTOCOL_CSG13.name())
+            show_data = protocol.parse_data_item(template_element, data_content, 0, 0, ProtocolInfo.PROTOCOL_CSG13)
             frame_fun.prase_data_with_config(show_data, False, alalysic_result)
             sub_result = []
             reverse_item = item.replace(' ', '').replace('\n', '')

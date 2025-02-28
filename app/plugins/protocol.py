@@ -218,7 +218,7 @@ def prase_type_item(data_item_elem, data_segment, index, need_delete, singal_len
         FRAME_645.Analysis_645_fram_by_afn(data_segment, subitem_value,index)
         sub_length = len(data_segment)
         return subitem_value
-    elif sub_type in (ProtocolInfo.PROTOCOL_CSG13.name()):
+    elif sub_type in (ProtocolInfo.PROTOCOL_CSG13):
         subitem_value = []
         csg = FrameCsg()
         csg.Analysis_csg_frame_by_afn(data_segment, subitem_value,index)
@@ -736,7 +736,7 @@ class PraseFrameData():
         # 根据xml配置解析数据
         parsed_data = {}
         data_item_elem = ConfigManager.get_config_xml(data_item_id, protocol, region)
-        need_delete = True if protocol == ProtocolInfo.PROTOCOL_DLT64507.name() else False
+        need_delete = True if protocol == ProtocolInfo.PROTOCOL_DLT64507 else False
         if data_item_elem is not None:
             parsed_data = parse_data_item(data_item_elem, data_segment, index, need_delete, protocol)
         return parsed_data
@@ -967,7 +967,7 @@ def Alalysis_read_frame(frame, result_list,indx):
     data_identifier_str = frame_fun.get_data_str_delete_33h_reverse(data_identifier)
 
     data_list = []
-    data_item = ConfigManager.get_config_xml(data_identifier_str, ProtocolInfo.PROTOCOL_DLT64507.name(), frame_fun.globregion)
+    data_item = ConfigManager.get_config_xml(data_identifier_str, ProtocolInfo.PROTOCOL_DLT64507, frame_fun.globregion)
     if data_item is not None:
         data_identifier_str = "数据标识编码：" + f"[{data_identifier_str}]" + "-" + data_item.find('name').text
     else:
@@ -995,14 +995,14 @@ def analyze_read_response_frame(frame, result_list,indx):
     # 转换数据标识和数据内容为字符串形式
     prase_data = PraseFrameData()
     data_identifier_str = frame_fun.get_data_str_delete_33h_reverse(data_identifier)
-    data_item_elem = ConfigManager.get_config_xml(data_identifier_str, ProtocolInfo.PROTOCOL_DLT64507.name(), frame_fun.globregion)
+    data_item_elem = ConfigManager.get_config_xml(data_identifier_str, ProtocolInfo.PROTOCOL_DLT64507, frame_fun.globregion)
     if data_item_elem is not None:
         sub_result = []
         sublength_ele = data_item_elem.find('length')
         if sublength_ele is not None:
             sub_length_cont = sublength_ele.text
             if sub_length_cont.upper() in "UNKNOWN":
-                sublength = prase_data.caculate_item_length(data_item_elem, data_content, ProtocolInfo.PROTOCOL_DLT64507.name())
+                sublength = prase_data.caculate_item_length(data_item_elem, data_content, ProtocolInfo.PROTOCOL_DLT64507)
             else:
                 sublength = int(sub_length_cont)
         else:
@@ -1018,7 +1018,7 @@ def analyze_read_response_frame(frame, result_list,indx):
             indx += 5
         pos = 0
         while pos < all_length:
-            alalysic_result = prase_data.parse_data(data_identifier_str,ProtocolInfo.PROTOCOL_DLT64507.name(), frame_fun.globregion,data_content[pos:pos+sublength], 14 + pos +indx)
+            alalysic_result = prase_data.parse_data(data_identifier_str,ProtocolInfo.PROTOCOL_DLT64507, frame_fun.globregion,data_content[pos:pos+sublength], 14 + pos +indx)
             frame_fun.prase_data_with_config(alalysic_result, True,sub_result)
             pos += sublength
         dis_data_identifier = "数据标识编码：" + f"[{data_identifier_str}]" + "-" + data_item_elem.find('name').text
@@ -1063,7 +1063,7 @@ def Alalysis_read_subsequent_frame(frame, result_list,indx):
     data_identifier_str = frame_fun.get_data_str_delete_33h_reverse(data_identifier)
 
     data_list = []
-    data_item = ConfigManager.get_config_xml(data_identifier_str, ProtocolInfo.PROTOCOL_DLT64507.name(), frame_fun.globregion)
+    data_item = ConfigManager.get_config_xml(data_identifier_str, ProtocolInfo.PROTOCOL_DLT64507, frame_fun.globregion)
     if data_item is not None:
         data_identifier_str = "数据标识编码：" + f"[{data_identifier_str}]" + "-" + data_item.find('name').text
     else:
@@ -1085,11 +1085,11 @@ def analyze_read_subsequent_response_frame(frame, result_list,indx):
     prase_data = PraseFrameData()
     # 转换数据标识和数据内容为字符串形式
     data_identifier_str = frame_fun.get_data_str_delete_33h_reverse(data_identifier)
-    data_item_elem = ConfigManager.get_config_xml(data_identifier_str, ProtocolInfo.PROTOCOL_DLT64507.name(), frame_fun.globregion)
+    data_item_elem = ConfigManager.get_config_xml(data_identifier_str, ProtocolInfo.PROTOCOL_DLT64507, frame_fun.globregion)
     frame_fun.add_data(data_list, "数据标识编码",frame_fun.get_data_str_with_space(data_identifier),"数据标识编码：" + data_identifier_str,[indx+10,indx+14])
     if data_item_elem is not None:
         sub_result = []
-        alalysic_result = prase_data.parse_data(data_identifier_str,ProtocolInfo.PROTOCOL_DLT64507.name(), frame_fun.globregion,data_content, indx+14)
+        alalysic_result = prase_data.parse_data(data_identifier_str,ProtocolInfo.PROTOCOL_DLT64507, frame_fun.globregion,data_content, indx+14)
         print(alalysic_result)
         frame_fun.prase_data_with_config(alalysic_result, True,sub_result)
         frame_fun.add_data(data_list, "数据标识内容",frame_fun.get_data_str_with_space(data_content),f"数据标识[{data_identifier_str}]内容数据{frame_fun.get_data_str_delete_33h_reverse(data_content)}", [indx+14,indx+length-2], sub_result)
@@ -1111,7 +1111,7 @@ def Alalysis_write_frame(frame, result_list,indx):
 
     data_list = []
     prase_data = PraseFrameData()
-    data_item = ConfigManager.get_config_xml(item_str, ProtocolInfo.PROTOCOL_DLT64507.name(), frame_fun.globregion)
+    data_item = ConfigManager.get_config_xml(item_str, ProtocolInfo.PROTOCOL_DLT64507, frame_fun.globregion)
     if data_item is not None:
         data_identifier_str = "数据标识编码：" + f"[{item_str}]" + "-" + data_item.find('name').text
     else:
@@ -1123,7 +1123,7 @@ def Alalysis_write_frame(frame, result_list,indx):
 
     if data_item is not None:
         write_result = []
-        alalysic_result = prase_data.parse_data(item_str,ProtocolInfo.PROTOCOL_DLT64507.name(), frame_fun.globregion,write_data, 22 + indx)
+        alalysic_result = prase_data.parse_data(item_str,ProtocolInfo.PROTOCOL_DLT64507, frame_fun.globregion,write_data, 22 + indx)
         frame_fun.prase_data_with_config(alalysic_result, True,write_result)
         frame_fun.add_data(data_list, "数据内容",frame_fun.get_data_str_with_space(write_data), "写数据内容："+frame_fun.get_data_str_delete_33h_reverse(write_data),[indx+22,indx+len(write_data) + 22],write_result)
     else:
